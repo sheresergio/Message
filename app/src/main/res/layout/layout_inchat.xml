@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:backgroundTint="@color/backgroundChat">
+    android:background="@color/backgroundChat">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarTop"
@@ -14,6 +13,105 @@
         android:background="@color/blueBackground"
         android:weightSum="1"
         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_in_chat"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_bomb"
+                android:contentDescription="@string/img_of_target_contact" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/contact_name"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="24sp"
+                android:textColor="@color/lightGrey"/>
+
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:weightSum="1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/greyChat"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp">
+
+
+                <EditText
+
+                    android:id="@+id/mark"
+                    android:background="@drawable/rounded_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/reply"
+                    android:inputType="textMultiLine"
+                    android:isScrollContainer="true"
+                    android:maxLines="4"
+                    android:layout_marginRight="80dp"
+                    android:layout_marginEnd="80dp"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="4dp"
+                    android:scrollbars="vertical"/>
+
+            </LinearLayout>
+
+
+
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="-80dp"
+                android:layout_marginStart="-80dp"
+                android:layout_marginBottom="-8dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_send" />
+
+            <Button
+                android:id="@+id/btn_bomb"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="-8dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_bomb" />
+
+        </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -24,65 +122,4 @@
         android:weightSum="1"
         />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/greyChat"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="10dp">
-
-
-            <EditText
-
-                android:id="@+id/mark"
-                android:background="@drawable/rounded_textview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/reply"
-                android:inputType="textMultiLine"
-                android:isScrollContainer="true"
-                android:maxLines="4"
-                android:layout_marginRight="80dp"
-                android:layout_marginEnd="80dp"
-                android:paddingBottom="4dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="4dp"
-                android:scrollbars="vertical"/>
-
-        </LinearLayout>
-
-
-
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="-80dp"
-            android:layout_marginStart="-80dp"
-            android:layout_marginBottom="-8dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/ic_send" />
-
-        <Button
-            android:id="@+id/btn_bomb"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="-8dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/ic_bomb" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
