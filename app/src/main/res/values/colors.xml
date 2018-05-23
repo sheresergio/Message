@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0f2f4b</color>
+    <color name="colorPrimaryDark">#0f2f4b</color>
+    <color name="colorAccent">#3F51B5</color>
+    <color name="blueBackground">#0f2f4b</color>
+    <color name="white">#ffffff</color>
+    <color name="orangeMain">#fe8e00</color>
+    <color name="darkOrange">#da9845</color>
+    <color name="colorGoogle">#ff0027</color>
+    <color name="colorFacebook">#344bff</color>
+    <color name="lightGrey">#dddddd</color>
+    <color name="hintGrey">#9c9c9c</color>
+    <color name="black">#000000</color>
+
+    <color name="orangeChat">#ffb04c</color>
+    <color name="greyChat">#ededed</color>
+    <color name="backgroundChat">#f4f4f4</color>
+
+    <color name="greenAccept">#ff952b</color>
+    <color name="redDeny">#3d0505</color>
+</resources>

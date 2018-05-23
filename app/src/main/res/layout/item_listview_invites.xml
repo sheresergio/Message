@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_invites"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/message_impossible_icon"
+                android:contentDescription="@string/contact_icon" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginEnd="100dp">
+
+                <TextView
+                    android:id="@+id/name_invites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/name"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="-95dp"
+                android:layout_marginStart="-95dp"
+                android:layout_marginRight="95dp"
+                android:layout_marginEnd="95dp">
+
+                <TextView
+                    android:id="@+id/invite_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/darkOrange"
+                    android:text="@string/invite_message" />
+
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="-95dp"
+                android:layout_marginStart="-95dp">
+
+                <Button
+                    android:id="@+id/button_accept_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@string/accept"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/accept"
+                    android:textColor="@color/black"
+                    />
+
+                <Button
+                    android:id="@+id/button_deny_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@string/deny"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/deny"
+                    android:textColor="@color/white"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Message Impossible</string>
+    <string name="logo_login">Message Impossible Logo</string>
+    <string name="password_hint">PASSWORD</string>
+    <string name="email_hint">EMAIL</string>
+    <string name="welcome_greet">WELCOME BACK</string>
+    <string name="login_text">LOGIN</string>
+    <string name="forgot_password_txt">Forgot Password?</string>
+    <string name="or_txt">OR</string>
+    <string name="login_with_google_txt">LOGIN WITH GOOGLE</string>
+    <string name="login_with_facebook_txt">LOGIN WITH FACEBOOK</string>
+    <string name="no_account_txt">Don\'t have an account</string>
+    <string name="register_here_txt">Register here</string>
+    <string name="already_account_txt">Already have an account?</string>
+    <string name="login_here_txt">Login here</string>
+    <string name="register_txt">REGISTER</string>
+    <string name="username_txt">USERNAME</string>
+    <string name="confirm_password_txt">CONFIRM_PASSWORD</string>
+    <string name="contacts_tab_txt">Contacts</string>
+    <string name="chats_tab_txt">Chats</string>
+    <string name="invites_tab_txt">Invites</string>
+    <string name="access_to_layouts_not_connected_yet">ACCESS TO LAYOUTS!!! NOT CONNECTED YET</string>
+    <string name="login">login</string>
+    <string name="tabs">tabs</string>
+    <string name="name_phone_no_or_email_address">Name, phone no. or email address</string>
+    <string name="name">name</string>
+    <string name="last_message">last_message</string>
+    <string name="last_connection">last connection</string>
+    <string name="online">ONLINE</string>
+    <string name="intro_txt_1">Memorise this message,</string>
+    <string name="intro_txt_2">it will self destruct in 3–2–1…</string>
+    <string name="splash_img">Splash_img</string>
+    <string name="remember_account">Introduce your email and we will send you your account info</string>
+    <string name="send_me_an_email">  Send me an email  </string>
+    <string name="back">back</string>
+    <string name="search">search</string>
+    <string name="new_group">new group</string>
+    <string name="date">date</string>
+    <string name="invite_message">invite message</string>
+    <string name="contact_icon">contact_icon</string>
+    <string name="accept">Accept</string>
+    <string name="deny">Deny</string>
+    <string name="mensaje_de_prueba">MENSAJE DE PRUEBA</string>
+    <string name="respuesta_de_prueba">RESPUESTA DE PRUEBA</string>
+    <string name="reply">Reply</string>
+
+    <string name="message">MENSAJE de prueba, probando</string>
+    <string name="answer">Respuesta</string>
+    <string name="timeago">10 secs ago</string>
+
+    <string name="facebook_app_id">2540878612802915</string>
+    <string name="fb_login_protocol_scheme">fb2540878612802915</string>
+    <string name="settings">settings</string>
+    <string name="add_friend">Add Friend</string>
+
+</resources>

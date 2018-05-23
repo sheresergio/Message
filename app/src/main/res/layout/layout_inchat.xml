@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:backgroundTint="@color/backgroundChat">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarTop"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blueBackground"
+        android:weightSum="1"
+        >
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/greyChat"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp">
+
+
+            <EditText
+
+                android:id="@+id/mark"
+                android:background="@drawable/rounded_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reply"
+                android:inputType="textMultiLine"
+                android:isScrollContainer="true"
+                android:maxLines="4"
+                android:layout_marginRight="80dp"
+                android:layout_marginEnd="80dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="4dp"
+                android:scrollbars="vertical"/>
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="-80dp"
+            android:layout_marginStart="-80dp"
+            android:layout_marginBottom="-8dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_send" />
+
+        <Button
+            android:id="@+id/btn_bomb"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="-8dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_bomb" />
+
+    </LinearLayout>
+
+</LinearLayout>
