@@ -2,26 +2,21 @@ package com.messageimposible.messageimpossible;
 
 public class EntityListItemInchatOwner {
 
-    private int id;
+    //private int id;
     private String time;
     private String message;
 
     public EntityListItemInchatOwner(){
-
-        this.id = 0;
-        this.time = "";
-        this.message="";
-
     }
 
-    public EntityListItemInchatOwner(int id, String time, String message){
+    public EntityListItemInchatOwner(String time, String message){//int id
 
-        this.id = id;
+        //this.id = id;
         this.message= message;
         this.time = time;
 
     }
-
+/*
     public int getName() {
         return id;
     }
@@ -29,7 +24,7 @@ public class EntityListItemInchatOwner {
     public void setName(int id) {
         this.id = id;
     }
-
+*/
     public String getTime() {
         return time;
     }

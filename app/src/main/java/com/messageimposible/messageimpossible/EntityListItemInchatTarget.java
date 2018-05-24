@@ -7,11 +7,6 @@ public class EntityListItemInchatTarget {
     private String message;
 
     public EntityListItemInchatTarget(){
-
-        this.id = 0;
-        this.time = "";
-        this.message="";
-
     }
 
     public EntityListItemInchatTarget(int id, String time, String message){
@@ -22,11 +17,11 @@ public class EntityListItemInchatTarget {
 
     }
 
-    public int getImg() {
+    public int getId() {
         return id;
     }
 
-    public void setImg(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

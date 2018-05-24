@@ -1,6 +1,8 @@
 package com.messageimposible.messageimpossible;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,47 +11,41 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class AdapterListViewInchatTarget extends BaseAdapter {
+public class AdapterListViewInchatTarget extends RecyclerView.Adapter<HolderMessageTarget> {
 
-    private Context context;
-    private ArrayList<EntityListItemContact> listItems;
+    private Context c;
+    private ArrayList<EntityListItemInchatTarget> messageList;
 
-    public AdapterListViewInchatTarget(Context context, ArrayList<EntityListItemContact> list) {
-        this.context = context;
-        this.listItems = list;
+    public AdapterListViewInchatTarget(Context context) {
+
+        this.c = context;
 
     }
 
-    @Override
-    public int getCount() {
+    public void addMessage(EntityListItemInchatTarget m){
 
-        return listItems.size();
+        messageList.add(m);
+
+    }
+
+
+    @NonNull
+    @Override
+    public HolderMessageTarget onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(c).inflate(R.layout.item_listview_inchat_target, parent,false);
+
+        return new HolderMessageTarget(v);
     }
 
     @Override
-    public Object getItem(int position) {
-        return listItems.get(position);
+    public void onBindViewHolder(@NonNull HolderMessageTarget holder, int position) {
+
+        holder.getMessage().setText(messageList.get(position).getMessage());
+        holder.getTime().setText(messageList.get(position).getTime());
     }
 
     @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        EntityListItemInchatOwner item = (EntityListItemInchatOwner) getItem(position);
-
-        convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_inchat_target, null);
-
-        TextView time = convertView.findViewById(R.id.online);
-        TextView message = convertView.findViewById(R.id.last_connection_contact);
-
-        time.setText(item.getTime());
-        message.setText(item.getMessage());
-
-        return convertView;
-
+    public int getItemCount() {
+        return messageList.size();
     }
 }
