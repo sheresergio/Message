@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-database:15.0.1' //Base de Datos
     implementation 'com.google.firebase:firebase-storage:15.0.2'  //Base de Archivos
+    implementation 'com.google.firebase:firebase-auth:15.1.0' //autentificacion de usuarios
 
 }
 
