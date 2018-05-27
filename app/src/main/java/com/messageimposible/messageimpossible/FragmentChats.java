@@ -23,6 +23,7 @@ public class FragmentChats extends Fragment {
 
     private ListView listView;
     private AdapterListViewChat adapterListViewChat;
+    private ArrayList<EntityListItemChat> listContact;
 
     @Nullable
     @Override
@@ -30,16 +31,20 @@ public class FragmentChats extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
-        ArrayList<EntityListItemChat> listContact = GetlistChat();
-        ListView lv = view.findViewById(R.id.listView_chats);
+        listContact = GetlistChat();
+        final ListView lv = view.findViewById(R.id.listView_chats);
         lv.setAdapter(new AdapterListViewChat(this.getActivity(), listContact));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                String name = listContact.get(position).getName();
+                int img = listContact.get(position).getImg();
+
                 Intent i = new Intent(getActivity(), ActivityInchat.class);
-                i.putExtra("position", position);
+                i.putExtra("name", name);
+                i.putExtra("img", img);
                 startActivity(i);
 
             }

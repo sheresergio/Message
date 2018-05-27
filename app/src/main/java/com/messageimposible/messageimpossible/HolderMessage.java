@@ -4,16 +4,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-public class HolderMessageTarget extends RecyclerView.ViewHolder{
+public class HolderMessage extends RecyclerView.ViewHolder{
 
     TextView message;
     TextView time;
 
-    public HolderMessageTarget(View itemView) {
+    public HolderMessage(View itemView) {
         super(itemView);
 
-        message = itemView.findViewById(R.id.message_target);
-        time = itemView.findViewById(R.id.time_target);
+        message = itemView.findViewById(R.id.message_owner);
+        time = itemView.findViewById(R.id.time_owner);
 
     }
 
