@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
@@ -32,7 +33,6 @@ public class ActivityRegister extends AppCompatActivity{
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
-    private DatabaseReference userReference;
 
 
     @Override
@@ -49,7 +49,6 @@ public class ActivityRegister extends AppCompatActivity{
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        userReference = database.getReference("users");
 
         login_text.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,24 +76,24 @@ public class ActivityRegister extends AppCompatActivity{
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
+                                        // Sign in success
 
-
-
-                                        Toast.makeText(ActivityRegister.this, "WELLCOME " + name, Toast.LENGTH_LONG).show();
-
-                                        EntityUsers user = new EntityUsers();
-                                        user.setEmail(email);
-                                        user.setUsername(name);
-                                        userReference.push().setValue(user);
+                                        EntityUsers user = new EntityUsers();                           //create an empty user
+                                        user.setEmail(email);                                           //give an email to user
+                                        user.setUsername(name);                                         //give a name to the user
+                                        FirebaseUser currentUser = mAuth.getCurrentUser();              //get the reference of the current user logged
+                                        user.setId(currentUser.getUid());                               //give an id to the user
+                                        DatabaseReference reference =
+                                                database.getReference("users/"+currentUser.getUid());//give the reference to Firebase of an user to be created on the node users with the id from UID
+                                        reference.setValue(user);                                       //create the user in the database
 
                                         Intent i = new Intent(ActivityRegister.this, ActivityTabs.class);
                                         startActivity(i);
                                         finish();
 
                                     } else {
-                                        // If sign in fails, display a message to the user.
-                                        Toast.makeText(ActivityRegister.this, "Error al registrarse", Toast.LENGTH_LONG).show();
+                                        // If sign in fails.
+                                        Toast.makeText(ActivityRegister.this, "Registration Error! Please, try it again.", Toast.LENGTH_LONG).show();
                                     }
 
                                 }

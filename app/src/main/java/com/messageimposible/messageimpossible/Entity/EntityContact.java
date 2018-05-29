@@ -2,15 +2,25 @@ package com.messageimposible.messageimpossible.Entity;
 
 public class EntityContact {
 
+    private String id;
     private String username;
     private String email;
 
     public EntityContact() {
     }
 
-    public EntityContact(String username, String email) {
+    public EntityContact(String id, String username, String email) {
+        this.id = id;
         this.username = username;
         this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {

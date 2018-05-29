@@ -3,6 +3,7 @@ package com.messageimposible.messageimpossible.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.Fragment.FragmentChats;
 import com.messageimposible.messageimpossible.Fragment.FragmentContacts;
 import com.messageimposible.messageimpossible.Fragment.FragmentInvites;
@@ -27,6 +35,9 @@ public class ActivityTabs extends AppCompatActivity {
     private PageAdapter pagerAdapter;
 
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+
+    private String USER_NAME;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -40,6 +51,7 @@ public class ActivityTabs extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
 
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -116,6 +128,8 @@ public class ActivityTabs extends AppCompatActivity {
         }else if(res_id == R.id.action_addFriend){
 
             Toast.makeText(getApplicationContext(), "add friend", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(this, ActivityAddFriend.class);
+            startActivity(i);
 
         }else if (res_id == R.id.action_logout){
 
@@ -127,6 +141,37 @@ public class ActivityTabs extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser!=null){
+
+            DatabaseReference reference = database.getReference("users/"+currentUser.getUid());
+
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    EntityUsers user = dataSnapshot.getValue(EntityUsers.class);
+                    USER_NAME = user.getUsername();
+                    Toast.makeText(ActivityTabs.this, USER_NAME , Toast.LENGTH_LONG).show();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }else{
+
+
+
+        }
     }
 
 

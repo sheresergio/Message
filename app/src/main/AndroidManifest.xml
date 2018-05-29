@@ -16,6 +16,8 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activity.ActivityLogin" />
         <activity android:name=".Activity.ActivityRegister" />
+        <activity android:name=".Activity.ActivityAddFriend"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activity.ActivityForgotPass" />
         <activity android:name=".Activity.ActivityInchat"
             android:windowSoftInputMode="stateHidden"/>

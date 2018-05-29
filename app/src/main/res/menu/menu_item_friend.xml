@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/action_search_friend"
+        android:orderInCategory="100"
+        android:icon="@drawable/mag_10"
+        android:title="@string/search"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/action_logout_friend"
+        android:orderInCategory="100"
+        android:icon="@drawable/search_14"
+        android:title="@string/logout"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/action_back_friend"
+        android:orderInCategory="100"
+        android:icon="@drawable/search_14"
+        android:title="@string/back"
+        app:showAsAction="never"
+        />
+
+</menu>

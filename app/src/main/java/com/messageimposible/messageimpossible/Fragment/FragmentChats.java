@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class FragmentChats extends Fragment {
 
-    private ListView listView;
+    private ListView lv;
     private AdapterListViewChat adapterListViewChat;
     private ArrayList<EntityListItemChat> listContact;
 
@@ -36,7 +36,7 @@ public class FragmentChats extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
         listContact = GetlistChat();
-        final ListView lv = view.findViewById(R.id.listView_chats);
+        lv = view.findViewById(R.id.listView_chats);
         lv.setAdapter(new AdapterListViewChat(this.getActivity(), listContact));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
