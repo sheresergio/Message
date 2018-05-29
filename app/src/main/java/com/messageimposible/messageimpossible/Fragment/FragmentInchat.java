@@ -1,4 +1,4 @@
-package com.messageimposible.messageimpossible;
+package com.messageimposible.messageimpossible.Fragment;
 
 
 import android.os.Bundle;
@@ -8,8 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
+
+import com.messageimposible.messageimpossible.Adapter.AdapterListViewInvites;
+import com.messageimposible.messageimpossible.Entity.EntityListItemInvites;
+import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
 

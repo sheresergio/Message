@@ -1,26 +1,28 @@
-package com.messageimposible.messageimpossible;
+package com.messageimposible.messageimpossible.Entity;
 
-public class EntityListItemChat {
+import com.messageimposible.messageimpossible.R;
+
+public class EntityListItemContact {
 
     private int img;
     private String name;
-    private String lastMessage;
+    private String online;
     private String lastConnection;
 
-    public EntityListItemChat(){
+    public EntityListItemContact(){
 
         this.img = R.mipmap.message_impossible_icon;
         this.name = "";
-        this.lastMessage = "";
+        this.online = "";
         this.lastConnection = "";
 
     }
 
-    public EntityListItemChat(int img, String name, String lastMessage, String lastConnection){
+    public EntityListItemContact(int img, String name, String online, String lastConnection){
 
         this.img = img;
         this.name = name;
-        this.lastMessage = lastMessage;
+        this.online = online;
         this.lastConnection = lastConnection;
 
     }
@@ -41,12 +43,12 @@ public class EntityListItemChat {
         this.name = name;
     }
 
-    public String getLastMessage() {
-        return lastMessage;
+    public String getOnline() {
+        return online;
     }
 
-    public void setLastMessage(String lastMessage) {
-        this.lastMessage = lastMessage;
+    public void setOnline(String online) {
+        this.online = online;
     }
 
     public String getLastConnection() {

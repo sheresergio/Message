@@ -12,14 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ActivityTabs"
+        <activity android:name=".Activity.ActivityTabs"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ActivityLogin" />
-        <activity android:name=".ActivityRegister" />
-        <activity android:name=".ActivityForgotPass" />
-        <activity android:name=".ActivityInchat"
+        <activity android:name=".Activity.ActivityLogin" />
+        <activity android:name=".Activity.ActivityRegister" />
+        <activity android:name=".Activity.ActivityForgotPass" />
+        <activity android:name=".Activity.ActivityInchat"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ActivitySplashScreen">
+        <activity android:name=".Activity.ActivitySplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,8 +1,10 @@
-package com.messageimposible.messageimpossible;
+package com.messageimposible.messageimpossible.Holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import com.messageimposible.messageimpossible.R;
 
 public class HolderMessage extends RecyclerView.ViewHolder{
 

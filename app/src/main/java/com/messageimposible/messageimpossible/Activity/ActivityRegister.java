@@ -1,4 +1,4 @@
-package com.messageimposible.messageimpossible;
+package com.messageimposible.messageimpossible.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.messageimposible.messageimpossible.Entity.EntityUsers;
+import com.messageimposible.messageimpossible.R;
 
 public class ActivityRegister extends AppCompatActivity{
 

@@ -1,4 +1,6 @@
-package com.messageimposible.messageimpossible;
+package com.messageimposible.messageimpossible.Entity;
+
+import com.messageimposible.messageimpossible.R;
 
 public class EntityListItemInvites {
 

@@ -1,4 +1,4 @@
-package com.messageimposible.messageimpossible;
+package com.messageimposible.messageimpossible.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,13 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.messageimposible.messageimpossible.Entity.EntityListItemContact;
+import com.messageimposible.messageimpossible.R;
+
 import java.util.ArrayList;
 
-public class AdapterListViewChat extends BaseAdapter {
+public class AdapterListViewContact extends BaseAdapter {
     private Context context;
-    private ArrayList<EntityListItemChat> listItems;
+    private ArrayList<EntityListItemContact> listItems;
 
-    public AdapterListViewChat(Context context, ArrayList<EntityListItemChat> list) {
+    public AdapterListViewContact(Context context, ArrayList<EntityListItemContact> list) {
         this.context = context;
         this.listItems = list;
 
@@ -34,25 +37,25 @@ public class AdapterListViewChat extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
     @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        EntityListItemChat item = (EntityListItemChat) getItem(position);
+        EntityListItemContact item = (EntityListItemContact) getItem(position);
 
-        convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_chat, null);
+        convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_contacts, null);
 
-        ImageView img = convertView.findViewById(R.id.img_chat);
-        TextView name = convertView.findViewById(R.id.name_chat);
-        TextView last_message = convertView.findViewById(R.id.last_message_chat);
-        TextView last_connection = convertView.findViewById(R.id.last_connection_chat);
+        ImageView img = convertView.findViewById(R.id.img_contact);
+        TextView name = convertView.findViewById(R.id.name_contact);
+        TextView online = convertView.findViewById(R.id.online);
+        TextView last_connection = convertView.findViewById(R.id.last_connection_contact);
 
         img.setImageResource(item.getImg());
         name.setText(item.getName());
-        last_message.setText(item.getLastMessage());
+        online.setText(item.getOnline());
         last_connection.setText(item.getLastConnection());
 
         return convertView;

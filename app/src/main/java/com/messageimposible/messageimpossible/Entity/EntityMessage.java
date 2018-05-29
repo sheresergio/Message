@@ -1,4 +1,4 @@
-package com.messageimposible.messageimpossible;
+package com.messageimposible.messageimpossible.Entity;
 
 public class EntityMessage {
 

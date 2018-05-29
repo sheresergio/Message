@@ -1,4 +1,4 @@
-package com.messageimposible.messageimpossible;
+package com.messageimposible.messageimpossible.Activity;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -9,10 +9,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.messageimposible.messageimpossible.R;
 
 
 public class ActivitySplashScreen extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.messageimposible.messageimpossible;
+package com.messageimposible.messageimpossible.Fragment;
 
 
 import android.content.Intent;
@@ -10,8 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
+
+import com.messageimposible.messageimpossible.Activity.ActivityInchat;
+import com.messageimposible.messageimpossible.Adapter.AdapterListViewChat;
+import com.messageimposible.messageimpossible.Entity.EntityListItemChat;
+import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
 
