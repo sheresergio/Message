@@ -1,5 +1,6 @@
 package com.messageimposible.messageimpossible;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,10 +17,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class ActivityTabs extends AppCompatActivity {
 
     private ViewPager viewPager;
     private PageAdapter pagerAdapter;
+
+    private FirebaseAuth mAuth;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -32,6 +37,7 @@ public class ActivityTabs extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(pagerAdapter);
 
+        mAuth = FirebaseAuth.getInstance();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -109,10 +115,13 @@ public class ActivityTabs extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "add friend", Toast.LENGTH_LONG).show();
 
-        }else if (res_id == R.id.action_settings){
+        }else if (res_id == R.id.action_logout){
 
-            Toast.makeText(getApplicationContext(), "settings", Toast.LENGTH_LONG).show();
-
+            mAuth.signOut();
+            Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(this, ActivityLogin.class);
+            startActivity(i);
+            finish();
         }
 
         return true;
