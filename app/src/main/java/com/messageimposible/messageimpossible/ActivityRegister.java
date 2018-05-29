@@ -40,7 +40,7 @@ public class ActivityRegister extends AppCompatActivity{
 
         et_username = findViewById(R.id.et_username_register);
         et_email = findViewById(R.id.et_email);
-        et_pass = findViewById(R.id.password);
+        et_pass = findViewById(R.id.et_password_register);
         et_pass_conf = findViewById(R.id.confirm_password);
         login_text = findViewById(R.id.login_txt);
         register_button = findViewById(R.id.register_button);
@@ -112,14 +112,14 @@ public class ActivityRegister extends AppCompatActivity{
 
     }
 
-    public final static boolean validateEmail(CharSequence target){
+    private boolean validateEmail(CharSequence target){
 
         //devuelve true si no esta vacio y es un correo.
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches();
 
     }
 
-    public boolean validatePassword(){
+    private boolean validatePassword(){
 
         String pass, pass_conf;
 
@@ -138,7 +138,7 @@ public class ActivityRegister extends AppCompatActivity{
 
     }
 
-    public boolean validateUserName(String name){
+    private boolean validateUserName(String name){
 
         return !name.isEmpty();
 
