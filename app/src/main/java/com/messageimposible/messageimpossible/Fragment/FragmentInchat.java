@@ -42,19 +42,19 @@ public class FragmentInchat extends Fragment {
         EntityListItemInvites contact = new EntityListItemInvites();
 
         contact.setImg(R.drawable.facebook_icon);
-        contact.setName("Topher");
+        contact.setUsername("Topher");
         contact.setInviteMessage("Hey I'm Topher from school");
         contactlist.add(contact);
 
         contact = new EntityListItemInvites();
         contact.setImg(R.drawable.mag_09);
-        contact.setName("Mary");
+        contact.setUsername("Mary");
         contact.setInviteMessage("Hello, I would like to be your friend");
         contactlist.add(contact);
 
         contact = new EntityListItemInvites();
         contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setName("Estalin");
+        contact.setUsername("Estalin");
         contact.setInviteMessage("Hello, I would like to be your friend");
         contactlist.add(contact);
 

@@ -53,7 +53,7 @@ public class AdapterListViewInvites extends BaseAdapter {
         TextView invite_message = convertView.findViewById(R.id.invite_message);
 
         img.setImageResource(item.getImg());
-        name.setText(item.getName());
+        name.setText(item.getUsername());
         invite_message.setText(item.getInviteMessage());
 
         return convertView;

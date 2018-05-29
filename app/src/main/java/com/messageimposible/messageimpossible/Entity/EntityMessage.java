@@ -3,7 +3,7 @@ package com.messageimposible.messageimpossible.Entity;
 public class EntityMessage {
 
     //private int id;
-    private String name;
+    private String username;
     private String message;
 
     public EntityMessage(){
@@ -13,16 +13,16 @@ public class EntityMessage {
 
         //this.id = id;
         this.message= message;
-        this.name = name;
+        this.username = name;
 
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMessage() {

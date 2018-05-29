@@ -33,6 +33,7 @@ public class ActivityTabs extends AppCompatActivity {
 
     private ViewPager viewPager;
     private PageAdapter pagerAdapter;
+    private Bundle b = new Bundle();
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -87,9 +88,11 @@ public class ActivityTabs extends AppCompatActivity {
 
                 case 0:
                     fragment = new FragmentContacts();
+                    fragment.setArguments(b);
                     break;
                 case 1:
                     fragment = new FragmentChats();
+                    fragment.setArguments(b);
                     break;
                 case 2:
                     fragment = new FragmentInvites();
@@ -123,18 +126,19 @@ public class ActivityTabs extends AppCompatActivity {
 
         if(res_id == R.id.action_search){
 
-            Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_LONG).show();
 
         }else if(res_id == R.id.action_addFriend){
 
-            Toast.makeText(getApplicationContext(), "add friend", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "add friend", Toast.LENGTH_LONG).show();
             Intent i = new Intent(this, ActivityAddFriend.class);
+            i.putExtra("name", USER_NAME);
             startActivity(i);
 
         }else if (res_id == R.id.action_logout){
 
             mAuth.signOut();
-            Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();
             Intent i = new Intent(this, ActivityLogin.class);
             startActivity(i);
             finish();
@@ -157,8 +161,8 @@ public class ActivityTabs extends AppCompatActivity {
 
                     EntityUsers user = dataSnapshot.getValue(EntityUsers.class);
                     USER_NAME = user.getUsername();
-                    Toast.makeText(ActivityTabs.this, USER_NAME , Toast.LENGTH_LONG).show();
-
+                    //Toast.makeText(ActivityTabs.this, USER_NAME , Toast.LENGTH_LONG).show();
+                    b.putString("name", USER_NAME);
                 }
 
                 @Override

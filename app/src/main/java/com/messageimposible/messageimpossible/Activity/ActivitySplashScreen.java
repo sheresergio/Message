@@ -41,8 +41,6 @@ public class ActivitySplashScreen extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser!=null){
 
-            Toast.makeText(this, "Usuario ya logeado.", Toast.LENGTH_LONG).show();
-
             Intent i = new Intent(ActivitySplashScreen.this, ActivityTabs.class);
             startActivity(i);
             finish();

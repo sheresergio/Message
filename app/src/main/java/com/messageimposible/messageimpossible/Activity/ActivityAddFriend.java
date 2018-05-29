@@ -13,8 +13,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewAddFriend;
 import com.messageimposible.messageimpossible.Entity.EntityListItemAddFriend;
+import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
@@ -22,8 +28,15 @@ import java.util.ArrayList;
 public class ActivityAddFriend extends AppCompatActivity{
 
     private ListView lv;
+    private ArrayList<EntityListItemAddFriend> listContacts;
     private ArrayList<EntityListItemAddFriend> listFriends;
+    private AdapterListViewAddFriend adapter;
+
+    private String name;
+
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
 
     @Override
@@ -31,11 +44,24 @@ public class ActivityAddFriend extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_add_friend);
 
-        listFriends = GetlistChat();
+        Bundle b = getIntent().getExtras();
+
+        if(b.getString("name")!= null){
+
+            name = b.getString("name");
+            //Toast.makeText(this, name, Toast.LENGTH_LONG).show();
+
+        }
+
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("users");
+
+        listFriends = GetlistChat();
+        adapter = new AdapterListViewAddFriend(this, listFriends);
 
         lv = findViewById(R.id.listView_friends);
-        lv.setAdapter(new AdapterListViewAddFriend(this, listFriends));
+        lv.setAdapter(adapter);
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,29 +87,47 @@ public class ActivityAddFriend extends AppCompatActivity{
 
 
     private ArrayList<EntityListItemAddFriend> GetlistChat(){
-        ArrayList<EntityListItemAddFriend> contactlist = new ArrayList<EntityListItemAddFriend>();
+        listContacts = new ArrayList<EntityListItemAddFriend>();
 
         EntityListItemAddFriend contact = new EntityListItemAddFriend();
 
-        contact.setImg(R.drawable.facebook_icon);
-        contact.setName("Topher");
-        contact.setEmail("topher@gmail.com");
-        contactlist.add(contact);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
-        contact = new EntityListItemAddFriend();
-        contact.setImg(R.drawable.mag_09);
-        contact.setName("Mary");
-        contact.setEmail("mary@gmail.com");
-        contactlist.add(contact);
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listContacts.clear();
+                if (dataSnapshot.exists()){
 
-        contact = new EntityListItemAddFriend();
-        contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setName("Estalin");
-        contact.setEmail("estalin@admin.com");
-        contactlist.add(contact);
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                        EntityListItemAddFriend user = snapshot.getValue(EntityListItemAddFriend.class);
+
+                        Toast.makeText(ActivityAddFriend.this, user.getUsername(), Toast.LENGTH_LONG).show();
 
 
-        return contactlist;
+                        if(!user.getUsername().toString().equals(name)){
+
+                            //Toast.makeText(ActivityAddFriend.this, user.getName().toString(), Toast.LENGTH_LONG).show();
+                            listContacts.add(user);
+
+                        }
+
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        return listContacts;
     }
 
     @Override
@@ -120,5 +164,59 @@ public class ActivityAddFriend extends AppCompatActivity{
 
         return true;
     }
+
+
+    /*
+    ValueEventListener valueEventListener = new ValueEventListener() {
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            listContacts.clear();
+            if (dataSnapshot.exists()){
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    EntityListItemAddFriend user = snapshot.getValue(EntityListItemAddFriend.class);
+                    listContacts.add(user);
+
+                }
+
+                adapter.notifyDataSetChanged();
+
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
+*/
+/*
+
+
+        contact.setImg(R.drawable.facebook_icon);
+        contact.setName("Topher");
+        contact.setEmail("topher@gmail.com");
+        listContacts.add(contact);
+
+        contact = new EntityListItemAddFriend();
+        contact.setImg(R.drawable.mag_09);
+        contact.setName("Mary");
+        contact.setEmail("mary@gmail.com");
+        listContacts.add(contact);
+
+        contact = new EntityListItemAddFriend();
+        contact.setImg(R.mipmap.message_impossible_icon);
+        contact.setName("Estalin");
+        contact.setEmail("estalin@admin.com");
+        listContacts.add(contact);
+
+ */
+
+
+
 
 }

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,7 @@ public class ActivityInchat extends AppCompatActivity {
     private TextView target_name;
     private EditText txt_message;
     private RecyclerView rv_message;
+    private String username;
 
     private AdapterMessage adapter;
 
@@ -41,6 +43,11 @@ public class ActivityInchat extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_inchat);
+
+        Bundle extras = getIntent().getExtras();
+        username = extras.getString("username");
+
+        Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
 
         b_send = findViewById(R.id.btn_send);
         b_bomb = findViewById(R.id.btn_bomb);

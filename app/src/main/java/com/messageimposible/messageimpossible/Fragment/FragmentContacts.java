@@ -23,16 +23,34 @@ import java.util.ArrayList;
  */
 public class FragmentContacts extends Fragment {
 
+    private String username;
+
+    private ArrayList<EntityListItemContact> listContact;
+    private ListView lv;
+    private AdapterListViewContact adapter;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if(getArguments()!=null){
+
+            username = getArguments().getString("name");
+
+        }
+
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
 
-        final ArrayList<EntityListItemContact> listContact = GetlistContact();
-        final ListView lv = view.findViewById(R.id.listView_contacts);
-        AdapterListViewContact adapter = new AdapterListViewContact(this.getContext(), listContact);
+        listContact = GetlistContact();
+        lv = view.findViewById(R.id.listView_contacts);
+        adapter = new AdapterListViewContact(this.getContext(), listContact);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -41,6 +59,7 @@ public class FragmentContacts extends Fragment {
 
                 Intent i = new Intent(getActivity(), ActivityInchat.class);
                 i.putExtra("position", position);
+                i.putExtra("username", username);
                 startActivity(i);
 
             }
@@ -55,21 +74,21 @@ public class FragmentContacts extends Fragment {
         EntityListItemContact contact = new EntityListItemContact();
 
         contact.setImg(R.drawable.facebook_icon);
-        contact.setName("Topher");
+        contact.setUsername("Topher");
         contact.setOnline("ONLINE");
         contact.setLastConnection("20 Apr");
         contactlist.add(contact);
 
         contact = new EntityListItemContact();
         contact.setImg(R.drawable.mag_09);
-        contact.setName("Mary");
+        contact.setUsername("Mary");
         contact.setOnline("ONLINE");
         contact.setLastConnection("just now");
         contactlist.add(contact);
 
         contact = new EntityListItemContact();
         contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setName("Estalin");
+        contact.setUsername("Estalin");
         contact.setOnline("OFFLINE");
         contact.setLastConnection("Yesterday");
         contactlist.add(contact);

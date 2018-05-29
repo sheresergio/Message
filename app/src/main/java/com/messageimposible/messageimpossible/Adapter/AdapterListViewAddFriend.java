@@ -54,7 +54,7 @@ public class AdapterListViewAddFriend extends BaseAdapter {
         TextView email = convertView.findViewById(R.id.email_friend);
 
         img.setImageResource(item.getImg());
-        name.setText(item.getName());
+        name.setText(item.getUsername());
         email.setText(item.getEmail());
 
         return convertView;

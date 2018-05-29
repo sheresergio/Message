@@ -54,7 +54,7 @@ public class AdapterListViewContact extends BaseAdapter {
         TextView last_connection = convertView.findViewById(R.id.last_connection_contact);
 
         img.setImageResource(item.getImg());
-        name.setText(item.getName());
+        name.setText(item.getUsername());
         online.setText(item.getOnline());
         last_connection.setText(item.getLastConnection());
 

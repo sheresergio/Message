@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.messageimposible.messageimpossible.Activity.ActivityInchat;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewChat;
@@ -25,19 +26,38 @@ import java.util.ArrayList;
  */
 public class FragmentChats extends Fragment {
 
+    private String username;
+
     private ListView lv;
     private AdapterListViewChat adapterListViewChat;
     private ArrayList<EntityListItemChat> listContact;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if(getArguments()!=null){
+
+            username = getArguments().getString("name");
+
+        }
+
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_chats, container, false);
+
+        //Toast.makeText(getContext(), username, Toast.LENGTH_LONG).show();
 
         listContact = GetlistChat();
         lv = view.findViewById(R.id.listView_chats);
         lv.setAdapter(new AdapterListViewChat(this.getActivity(), listContact));
+
+
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -47,6 +67,7 @@ public class FragmentChats extends Fragment {
                 int img = listContact.get(position).getImg();
 
                 Intent i = new Intent(getActivity(), ActivityInchat.class);
+                i.putExtra("username", username);
                 i.putExtra("name", name);
                 i.putExtra("img", img);
                 startActivity(i);
