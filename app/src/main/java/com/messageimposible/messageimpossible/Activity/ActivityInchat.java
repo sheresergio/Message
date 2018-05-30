@@ -12,15 +12,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Adapter.AdapterMessage;
 import com.messageimposible.messageimpossible.Entity.EntityMessageOwner;
 import com.messageimposible.messageimpossible.Entity.EntityMessageTarget;
+import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 public class ActivityInchat extends AppCompatActivity {
@@ -31,23 +35,18 @@ public class ActivityInchat extends AppCompatActivity {
     private TextView target_name;
     private EditText txt_message;
     private RecyclerView rv_message;
-    private String username;
 
     private AdapterMessage adapter;
 
     //firebase
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_inchat);
-
-        Bundle extras = getIntent().getExtras();
-        username = extras.getString("username");
-
-        Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
 
         b_send = findViewById(R.id.btn_send);
         b_bomb = findViewById(R.id.btn_bomb);
@@ -59,6 +58,7 @@ public class ActivityInchat extends AppCompatActivity {
         //firebase
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("chat");
+        mAuth = FirebaseAuth.getInstance();
 
         adapter = new AdapterMessage(this);
 
@@ -66,20 +66,43 @@ public class ActivityInchat extends AppCompatActivity {
         rv_message.setLayoutManager(l);
         rv_message.setAdapter(adapter);
 
-
         b_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(!txt_message.getText().toString().equals("")) {
 
-                    databaseReference.push().setValue(
-                            new EntityMessageOwner(
-                                    "", txt_message.getText().toString(), ServerValue.TIMESTAMP
-                            )
-                    );
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                    if (currentUser!=null){
 
-                    //serverValue.TIMESTAMP devuelve la hora en forma de map
+                        DatabaseReference reference = database.getReference("users/"+currentUser.getUid());
+
+                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                EntityUsers user = dataSnapshot.getValue(EntityUsers.class);
+                                String USER_NAME = user.getUsername();
+
+                                databaseReference.push().setValue(
+                                        new EntityMessageOwner(
+                                                USER_NAME, txt_message.getText().toString(), ServerValue.TIMESTAMP
+                                        )
+                                );
+
+                                //serverValue.TIMESTAMP devuelve la hora en forma de map
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+
+
 
                 }
             }
@@ -134,5 +157,6 @@ public class ActivityInchat extends AppCompatActivity {
         rv_message.scrollToPosition(adapter.getItemCount()-1);
 
     }
+
 
 }

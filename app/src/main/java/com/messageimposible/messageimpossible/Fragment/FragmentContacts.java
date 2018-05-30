@@ -23,25 +23,9 @@ import java.util.ArrayList;
  */
 public class FragmentContacts extends Fragment {
 
-    private String username;
-
     private ArrayList<EntityListItemContact> listContact;
     private ListView lv;
     private AdapterListViewContact adapter;
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if(getArguments()!=null){
-
-            username = getArguments().getString("name");
-
-        }
-
-
-    }
 
     @Nullable
     @Override
@@ -59,7 +43,6 @@ public class FragmentContacts extends Fragment {
 
                 Intent i = new Intent(getActivity(), ActivityInchat.class);
                 i.putExtra("position", position);
-                i.putExtra("username", username);
                 startActivity(i);
 
             }

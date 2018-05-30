@@ -26,25 +26,10 @@ import java.util.ArrayList;
  */
 public class FragmentChats extends Fragment {
 
-    private String username;
-
     private ListView lv;
-    private AdapterListViewChat adapterListViewChat;
+    private AdapterListViewChat adapter;
     private ArrayList<EntityListItemChat> listContact;
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if(getArguments()!=null){
-
-            username = getArguments().getString("name");
-
-        }
-
-
-    }
 
     @Nullable
     @Override
@@ -55,7 +40,8 @@ public class FragmentChats extends Fragment {
 
         listContact = GetlistChat();
         lv = view.findViewById(R.id.listView_chats);
-        lv.setAdapter(new AdapterListViewChat(this.getActivity(), listContact));
+        adapter = new AdapterListViewChat(this.getActivity(), listContact);
+        lv.setAdapter(adapter);
 
 
 
@@ -67,7 +53,6 @@ public class FragmentChats extends Fragment {
                 int img = listContact.get(position).getImg();
 
                 Intent i = new Intent(getActivity(), ActivityInchat.class);
-                i.putExtra("username", username);
                 i.putExtra("name", name);
                 i.putExtra("img", img);
                 startActivity(i);
