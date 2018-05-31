@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +38,7 @@ public class FragmentInvites extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private FirebaseUser currentUser;
 
     private AdapterListViewInvites adapter;
     ArrayList<EntityListItemInvites> listInvites;
@@ -49,6 +51,7 @@ public class FragmentInvites extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        currentUser = mAuth.getCurrentUser();
         databaseReference = database.getReference("users");
 
         listInvites = GetlistInvites();
@@ -87,23 +90,24 @@ public class FragmentInvites extends Fragment {
 
                         EntityUsers user = snapshot.getValue(EntityUsers.class);
 
-                        if (!user.getInvites().isEmpty()){
+                        if (user.getId().equals(currentUser.getUid())){
 
-                            for(EntityInvite invite: user.getInvites()){
+                            if (!user.getInvites().isEmpty()){
 
-                                EntityListItemInvites contact = new EntityListItemInvites();
+                                for(EntityInvite invite: user.getInvites()){
 
-                                contact.setUsername(invite.getUsername());
-                                contact.setInviteMessage(invite.getEmail());
+                                    EntityListItemInvites contact = new EntityListItemInvites();
 
-                                contactlist.add(contact);
+                                    contact.setUsername(invite.getUsername());
+                                    contact.setInviteMessage(invite.getEmail());
+
+                                    contactlist.add(contact);
+
+                                }
 
                             }
 
                         }
-
-
-
                     }
 
                     adapter.notifyDataSetChanged();
