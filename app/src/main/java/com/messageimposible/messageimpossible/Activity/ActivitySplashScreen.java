@@ -39,6 +39,7 @@ public class ActivitySplashScreen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if (currentUser!=null){
 
             Intent i = new Intent(ActivitySplashScreen.this, ActivityTabs.class);
@@ -61,6 +62,22 @@ public class ActivitySplashScreen extends AppCompatActivity {
             }, 4000);
 
         }
+
+
+/*
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Intent i = new Intent(ActivitySplashScreen.this, ActivityLogin.class);
+
+                startActivity(i);
+
+                finish();
+
+            }
+        }, 4000);*/
+
     }
 
 }

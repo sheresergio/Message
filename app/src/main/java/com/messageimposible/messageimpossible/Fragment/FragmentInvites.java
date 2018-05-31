@@ -1,6 +1,7 @@
 package com.messageimposible.messageimpossible.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,10 +9,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.messageimposible.messageimpossible.Activity.ActivityAcceptInvites;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewInvites;
+import com.messageimposible.messageimpossible.Entity.EntityInvite;
+import com.messageimposible.messageimpossible.Entity.EntityListItemAddFriend;
 import com.messageimposible.messageimpossible.Entity.EntityListItemInvites;
+import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
@@ -22,7 +34,12 @@ import java.util.ArrayList;
  */
 public class FragmentInvites extends Fragment {
 
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
+    private AdapterListViewInvites adapter;
+    ArrayList<EntityListItemInvites> listInvites;
 
     @Nullable
     @Override
@@ -30,37 +47,81 @@ public class FragmentInvites extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_invites, container, false);
 
-        ArrayList<EntityListItemInvites> listInvites = GetlistInvites();
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("users");
+
+        listInvites = GetlistInvites();
         ListView lv = view.findViewById(R.id.listView_invites);
-        lv.setAdapter(new AdapterListViewInvites(this.getActivity(), listInvites));
+        adapter = new AdapterListViewInvites(this.getActivity(), listInvites);
+
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(getContext(), ActivityAcceptInvites.class);
+                //TODO bundle att
+                i.putExtra("username", listInvites.get(position).getUsername());
+                startActivity(i);
+
+            }
+        });
 
         return view;
 
     }
 
     private ArrayList<EntityListItemInvites> GetlistInvites(){
-        ArrayList<EntityListItemInvites> contactlist = new ArrayList<EntityListItemInvites>();
+        final ArrayList<EntityListItemInvites> contactlist = new ArrayList<EntityListItemInvites>();
 
-        EntityListItemInvites contact = new EntityListItemInvites();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
-        contact.setImg(R.drawable.facebook_icon);
-        contact.setUsername("Topher");
-        contact.setInviteMessage("Hey I'm Topher from school");
-        contactlist.add(contact);
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                contactlist.clear();
+                if (dataSnapshot.exists()){
 
-        contact = new EntityListItemInvites();
-        contact.setImg(R.drawable.mag_09);
-        contact.setUsername("Mary");
-        contact.setInviteMessage("Hello, I would like to be your friend");
-        contactlist.add(contact);
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-        contact = new EntityListItemInvites();
-        contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setUsername("Estalin");
-        contact.setInviteMessage("Hello, I would like to be your friend");
-        contactlist.add(contact);
+                        EntityUsers user = snapshot.getValue(EntityUsers.class);
+
+                        if (!user.getInvites().isEmpty()){
+
+                            for(EntityInvite invite: user.getInvites()){
+
+                                EntityListItemInvites contact = new EntityListItemInvites();
+
+                                contact.setUsername(invite.getUsername());
+                                contact.setInviteMessage(invite.getEmail());
+
+                                contactlist.add(contact);
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         return contactlist;
+
+
     }
 
 }

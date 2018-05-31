@@ -61,38 +61,6 @@
             </LinearLayout>
 
 
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_marginLeft="-95dp"
-                android:layout_marginStart="-95dp">
-
-                <Button
-                    android:id="@+id/button_accept_inv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="@string/accept"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/accept"
-                    android:textColor="@color/black"
-                    />
-
-                <Button
-                    android:id="@+id/button_deny_inv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="@string/deny"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/deny"
-                    android:textColor="@color/white"
-                    />
-
-            </LinearLayout>
-
         </LinearLayout>
 
 </LinearLayout>

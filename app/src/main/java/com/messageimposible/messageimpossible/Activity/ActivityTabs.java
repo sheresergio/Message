@@ -38,6 +38,7 @@ public class ActivityTabs extends AppCompatActivity {
     private FirebaseDatabase database;
 
     private String USER_NAME;
+    private String USER_EMAIL;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -130,6 +131,7 @@ public class ActivityTabs extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "add friend", Toast.LENGTH_LONG).show();
             Intent i = new Intent(this, ActivityAddFriend.class);
             i.putExtra("name", USER_NAME);
+            i.putExtra("email", USER_EMAIL);
             startActivity(i);
 
         }else if (res_id == R.id.action_logout){
@@ -158,6 +160,7 @@ public class ActivityTabs extends AppCompatActivity {
 
                     EntityUsers user = dataSnapshot.getValue(EntityUsers.class);
                     USER_NAME = user.getUsername();
+                    USER_EMAIL = user.getEmail();
                     //Toast.makeText(ActivityTabs.this, USER_NAME , Toast.LENGTH_LONG).show();
                 }
 

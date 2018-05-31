@@ -5,20 +5,20 @@ import com.messageimposible.messageimpossible.R;
 public class EntityListItemAddFriend {
 
     private int img;
+    private String id;
     private String username;
     private String email;
 
     public EntityListItemAddFriend(){
 
         this.img = R.mipmap.message_impossible_icon;
-        this.username = "";
-        this.email = "";
 
     }
 
-    public EntityListItemAddFriend(int img, String name, String email){
+    public EntityListItemAddFriend(int img, String id, String name, String email){
 
         this.img = img;
+        this.id = id;
         this.username = name;
         this.email = email;
 
@@ -30,6 +30,14 @@ public class EntityListItemAddFriend {
 
     public void setImg(int img) {
         this.img = img;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {

@@ -33,6 +33,7 @@ public class ActivityAddFriend extends AppCompatActivity{
     private AdapterListViewAddFriend adapter;
 
     private String name;
+    private String email;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -49,7 +50,7 @@ public class ActivityAddFriend extends AppCompatActivity{
         if(b.getString("name")!= null){
 
             name = b.getString("name");
-            //Toast.makeText(this, name, Toast.LENGTH_LONG).show();
+            email = b.getString("email");
 
         }
 
@@ -73,8 +74,13 @@ public class ActivityAddFriend extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 //que cree un menu emergente donde ponga nombre de la persona a la que quieres invitar
-                //y dos botones, uno para comfirmar y otro para cancelar
 
+                Intent i = new Intent(ActivityAddFriend.this, ActivitySendInvites.class);
+                i.putExtra("name_target", listFriends.get(position).getUsername());
+                i.putExtra("id_target", listFriends.get(position).getId());
+                i.putExtra("username", name);
+                i.putExtra("email", email);
+                startActivity(i);
                 //si confirma debera aparecer una invitacion en la pestaña de invites del taget
 
                 //si el target acepta, debera aparecer en la pestaña de contactos el nuevo amigo aceptado,
@@ -89,8 +95,6 @@ public class ActivityAddFriend extends AppCompatActivity{
     private ArrayList<EntityListItemAddFriend> GetlistChat(){
         listContacts = new ArrayList<EntityListItemAddFriend>();
 
-        EntityListItemAddFriend contact = new EntityListItemAddFriend();
-
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -102,13 +106,10 @@ public class ActivityAddFriend extends AppCompatActivity{
 
                         EntityListItemAddFriend user = snapshot.getValue(EntityListItemAddFriend.class);
 
-                        Toast.makeText(ActivityAddFriend.this, user.getUsername(), Toast.LENGTH_LONG).show();
 
+                        if(!user.getUsername().equals(name)){
 
-                        if(!user.getUsername().toString().equals(name)){
-
-                            //Toast.makeText(ActivityAddFriend.this, user.getName().toString(), Toast.LENGTH_LONG).show();
-                            listContacts.add(user);
+                           listContacts.add(user);
 
                         }
 
@@ -164,59 +165,5 @@ public class ActivityAddFriend extends AppCompatActivity{
 
         return true;
     }
-
-
-    /*
-    ValueEventListener valueEventListener = new ValueEventListener() {
-
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            listContacts.clear();
-            if (dataSnapshot.exists()){
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    EntityListItemAddFriend user = snapshot.getValue(EntityListItemAddFriend.class);
-                    listContacts.add(user);
-
-                }
-
-                adapter.notifyDataSetChanged();
-
-            }
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
-
-*/
-/*
-
-
-        contact.setImg(R.drawable.facebook_icon);
-        contact.setName("Topher");
-        contact.setEmail("topher@gmail.com");
-        listContacts.add(contact);
-
-        contact = new EntityListItemAddFriend();
-        contact.setImg(R.drawable.mag_09);
-        contact.setName("Mary");
-        contact.setEmail("mary@gmail.com");
-        listContacts.add(contact);
-
-        contact = new EntityListItemAddFriend();
-        contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setName("Estalin");
-        contact.setEmail("estalin@admin.com");
-        listContacts.add(contact);
-
- */
-
-
-
 
 }

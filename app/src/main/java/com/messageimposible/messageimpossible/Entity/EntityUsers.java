@@ -1,5 +1,6 @@
 package com.messageimposible.messageimpossible.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EntityUsers {
@@ -7,7 +8,8 @@ public class EntityUsers {
     private String id;
     private String username;
     private String email;
-    private List<EntityContact> conatcts;
+    private List<EntityContact> contacts = new ArrayList<>();
+    private List<EntityInvite> invites = new ArrayList<>();
 
     public EntityUsers() {
 
@@ -16,13 +18,25 @@ public class EntityUsers {
     public EntityUsers(String username, String email) {
         this.username = username;
         this.email = email;
-        this.conatcts = null;
     }
 
-    public EntityUsers(String username, String email, List<EntityContact> conatcts) {
+    public EntityUsers(String username, String email, List<EntityContact> conatcts, List<EntityInvite> invites) {
         this.username = username;
         this.email = email;
-        this.conatcts = conatcts;
+        this.contacts = conatcts;
+        this.invites = invites;
+    }
+
+    public void addInvites(EntityInvite invite){
+
+        invites.add(invite);
+
+    }
+
+    public void addFriends(EntityContact contact){
+
+        contacts.add(contact);
+
     }
 
     public String getId() {
@@ -49,11 +63,19 @@ public class EntityUsers {
         this.email = email;
     }
 
-    public List<EntityContact> getConatcts() {
-        return conatcts;
+    public List<EntityContact> getContacts() {
+        return contacts;
     }
 
-    public void setConatcts(List<EntityContact> conatcts) {
-        this.conatcts = conatcts;
+    public void setContacts(List<EntityContact> conatcts) {
+        this.contacts = conatcts;
+    }
+
+    public List<EntityInvite> getInvites() {
+        return invites;
+    }
+
+    public void setInvites(List<EntityInvite> invites) {
+        this.invites = invites;
     }
 }

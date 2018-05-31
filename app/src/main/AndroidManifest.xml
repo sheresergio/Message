@@ -28,6 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.ActivitySendInvites"
+            android:theme="@style/AppTheme.MyPopupTheme"/>
+
+        <activity android:name=".Activity.ActivityAcceptInvites"
+            android:theme="@style/AppTheme.MyPopupTheme"/>
 
     </application>
 
