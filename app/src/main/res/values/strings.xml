@@ -9,7 +9,7 @@
     <string name="or_txt">OR</string>
     <string name="login_with_google_txt">LOGIN WITH GOOGLE</string>
     <string name="login_with_facebook_txt">LOGIN WITH FACEBOOK</string>
-    <string name="no_account_txt">Don\'t have an account</string>
+    <string name="no_account_txt">Don\'t have an account?</string>
     <string name="register_here_txt">Register here</string>
     <string name="already_account_txt">Already have an account?</string>
     <string name="login_here_txt">Login here</string>
@@ -43,6 +43,7 @@
     <string name="mensaje_de_prueba">MENSAJE DE PRUEBA</string>
     <string name="respuesta_de_prueba">RESPUESTA DE PRUEBA</string>
     <string name="reply">Reply</string>
+    <string name="profile_pic">Profile Picture</string>
 
     <string name="message">MENSAJE de prueba, probando</string>
     <string name="answer">Respuesta</string>
