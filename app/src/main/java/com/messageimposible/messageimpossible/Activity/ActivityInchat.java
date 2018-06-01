@@ -28,7 +28,7 @@ import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 public class ActivityInchat extends AppCompatActivity {
-
+//HOLA 13.53
     private Button b_send;
     private Button b_bomb;
     private ImageView target_img;
