@@ -1,7 +1,11 @@
 package com.messageimposible.messageimpossible.Activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,13 +33,14 @@ import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 public class ActivityInchat extends AppCompatActivity {
-//HOLA 13.53
     private Button b_send;
     private Button b_bomb;
     private ImageView target_img;
     private TextView target_name;
     private EditText txt_message;
     private RecyclerView rv_message;
+    private LinearLayout linearbombone;
+    private LinearLayout linearinchatbarbottom;
 
     private AdapterMessage adapter;
 
@@ -54,6 +60,16 @@ public class ActivityInchat extends AppCompatActivity {
         target_name = findViewById(R.id.tv_targetName);
         txt_message = findViewById(R.id.et_inchat);
         rv_message = findViewById(R.id.rv_inchat);
+
+        linearinchatbarbottom = findViewById(R.id.linear_inchat_bar_bottom);
+        linearbombone = findViewById(R.id.linearbombone);
+        linearbombone.setVisibility(View.GONE);
+
+        target_img = findViewById(R.id.iv_target_img);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.guy1);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        target_img.setImageDrawable(roundedBitmapDrawable);
 
         //firebase
         database = FirebaseDatabase.getInstance();
@@ -75,30 +91,36 @@ public class ActivityInchat extends AppCompatActivity {
                     FirebaseUser currentUser = mAuth.getCurrentUser();
                     if (currentUser!=null){
 
-                        DatabaseReference reference = database.getReference("users/"+currentUser.getUid());
+                        if(linearbombone.getVisibility()== View.VISIBLE){
+                            //SEND MESSAGE WITH SELF DESTRUCTION
+                        }else{
+                            DatabaseReference reference = database.getReference("users/"+currentUser.getUid());
 
-                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
+                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                EntityUsers user = dataSnapshot.getValue(EntityUsers.class);
-                                String USER_NAME = user.getUsername();
+                                    EntityUsers user = dataSnapshot.getValue(EntityUsers.class);
+                                    String USER_NAME = user.getUsername();
 
-                                databaseReference.push().setValue(
-                                        new EntityMessageOwner(
-                                                USER_NAME, txt_message.getText().toString(), ServerValue.TIMESTAMP
-                                        )
-                                );
+                                    databaseReference.push().setValue(
+                                            new EntityMessageOwner(
+                                                    USER_NAME, txt_message.getText().toString(), ServerValue.TIMESTAMP
+                                            )
+                                    );
 
-                                //serverValue.TIMESTAMP devuelve la hora en forma de map
+                                    //serverValue.TIMESTAMP devuelve la hora en forma de map
 
-                            }
+                                }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
+
+
 
                     }
 
@@ -108,6 +130,27 @@ public class ActivityInchat extends AppCompatActivity {
             }
         });
 
+        b_bomb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (linearbombone.getVisibility()== View.GONE) {
+                    linearbombone.setVisibility(View.VISIBLE);
+                    b_bomb.setBackgroundResource(R.drawable.ic_bomb2);
+                    b_send.setBackgroundResource(R.drawable.ic_send1);
+                    linearinchatbarbottom.setBackgroundResource(R.color.orangeChat);
+
+                } else {
+                    linearbombone.setVisibility(View.GONE);
+                    b_bomb.setBackgroundResource(R.drawable.ic_bomb1);
+                    b_send.setBackgroundResource(R.drawable.ic_send2);
+                    linearinchatbarbottom.setBackgroundResource(R.color.greyChat);
+
+                }
+
+
+            }
+        });
 
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
