@@ -22,7 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Activity.ActivityAcceptInvites;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewInvites;
 import com.messageimposible.messageimpossible.Entity.EntityInvite;
-import com.messageimposible.messageimpossible.Entity.EntityListItemInvites;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
@@ -35,8 +34,11 @@ public class FragmentInvites extends Fragment {
     private DatabaseReference databaseReference;
     private FirebaseUser currentUser;
 
+    private String USER_NAME;
+    private String USER_EMAIL;
+
     private AdapterListViewInvites adapter;
-    ArrayList<EntityListItemInvites> listInvites;
+    ArrayList<EntityInvite> listInvites;
 
     @Nullable
     @Override
@@ -53,6 +55,28 @@ public class FragmentInvites extends Fragment {
         ListView lv = view.findViewById(R.id.listView_invites);
         adapter = new AdapterListViewInvites(this.getActivity(), listInvites);
 
+        if (currentUser!=null){
+
+            DatabaseReference reference = database.getReference("users/"+currentUser.getUid());
+
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    EntityUsers user = dataSnapshot.getValue(EntityUsers.class);
+                    USER_NAME = user.getUsername();
+                    USER_EMAIL = user.getEmail();
+                    //Toast.makeText(ActivityTabs.this, USER_NAME , Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -60,7 +84,8 @@ public class FragmentInvites extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent i = new Intent(getContext(), ActivityAcceptInvites.class);
-                i.putExtra("username", listInvites.get(position).getUsername());
+                i.putExtra("id_target", listInvites.get(position).getUsername());
+                i.putExtra("username", USER_NAME);
                 startActivity(i);
 
             }
@@ -70,8 +95,8 @@ public class FragmentInvites extends Fragment {
 
     }
 
-    private ArrayList<EntityListItemInvites> GetlistInvites(){
-        final ArrayList<EntityListItemInvites> contactlist = new ArrayList<EntityListItemInvites>();
+    private ArrayList<EntityInvite> GetlistInvites(){
+        final ArrayList<EntityInvite> contactlist = new ArrayList<>();
 
         //TODO que actualice nada mas tener una nueva invitacion
 
@@ -92,10 +117,10 @@ public class FragmentInvites extends Fragment {
 
                                 for(EntityInvite invite: user.getInvites()){
 
-                                    EntityListItemInvites contact = new EntityListItemInvites();
+                                    EntityInvite contact = new EntityInvite();
 
                                     contact.setUsername(invite.getUsername());
-                                    contact.setInviteMessage(invite.getEmail());
+                                    contact.setEmail(invite.getEmail());
 
                                     contactlist.add(contact);
 

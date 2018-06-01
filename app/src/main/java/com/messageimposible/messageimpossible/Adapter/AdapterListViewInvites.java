@@ -9,16 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.messageimposible.messageimpossible.Entity.EntityListItemInvites;
+import com.messageimposible.messageimpossible.Entity.EntityInvite;
 import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
 
 public class AdapterListViewInvites extends BaseAdapter {
     private Context context;
-    private ArrayList<EntityListItemInvites> listItems;
+    private ArrayList<EntityInvite> listItems;
 
-    public AdapterListViewInvites(Context context, ArrayList<EntityListItemInvites> list) {
+    public AdapterListViewInvites(Context context, ArrayList<EntityInvite> list) {
         this.context = context;
         this.listItems = list;
 
@@ -44,7 +44,7 @@ public class AdapterListViewInvites extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        EntityListItemInvites item = (EntityListItemInvites) getItem(position);
+        EntityInvite item = (EntityInvite) getItem(position);
 
         convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_invites, null);
 
@@ -54,7 +54,7 @@ public class AdapterListViewInvites extends BaseAdapter {
 
         img.setImageResource(item.getImg());
         name.setText(item.getUsername());
-        invite_message.setText(item.getInviteMessage());
+        invite_message.setText(item.getEmail());
 
         return convertView;
 

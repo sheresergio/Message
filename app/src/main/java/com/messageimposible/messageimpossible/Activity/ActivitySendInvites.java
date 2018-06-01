@@ -26,6 +26,7 @@ public class ActivitySendInvites extends AppCompatActivity{
     private String email;
     private String username;
     private String id_target;
+    private String user_id;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -60,6 +61,7 @@ public class ActivitySendInvites extends AppCompatActivity{
         id_target = b.getString("id_target");
         username = b.getString("username");
         email = b.getString("email");
+        user_id = b.getString("user_id");
 
         b_accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +97,7 @@ public class ActivitySendInvites extends AppCompatActivity{
 
                         if (user.getUsername().equals(name.getText())){
 
-                            EntityInvite inv = new EntityInvite(username, email);
+                            EntityInvite inv = new EntityInvite(user_id, username, email);
                             user.addInvites(inv);
 
                             DatabaseReference userReference = databaseReference.child(id_target);

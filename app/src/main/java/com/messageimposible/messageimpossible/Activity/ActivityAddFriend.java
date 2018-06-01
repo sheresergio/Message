@@ -35,6 +35,7 @@ public class ActivityAddFriend extends AppCompatActivity{
 
     private String name;
     private String email;
+    private String user_id;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -52,6 +53,7 @@ public class ActivityAddFriend extends AppCompatActivity{
 
             name = b.getString("name");
             email = b.getString("email");
+            user_id = b.getString("id");
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -80,14 +82,17 @@ public class ActivityAddFriend extends AppCompatActivity{
                 i.putExtra("id_target", listFriends.get(position).getId());
                 i.putExtra("username", name);
                 i.putExtra("email", email);
+                i.putExtra("id", user_id);
                 startActivity(i);
                 //si confirma debera aparecer una invitacion en la pestaña de invites del taget
 
                 //si el target acepta, debera aparecer en la pestaña de contactos el nuevo amigo aceptado,
                 //tanto en la del target como en la del owner.
-
+                adapter.notifyDataSetChanged();
             }
         });
+
+
 
     }
 
@@ -146,6 +151,7 @@ public class ActivityAddFriend extends AppCompatActivity{
 
                     }
 
+
                     adapter.notifyDataSetChanged();
 
                 }
@@ -178,17 +184,17 @@ public class ActivityAddFriend extends AppCompatActivity{
 
         if(res_id == R.id.action_search_friend){
 
-            Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_LONG).show();
 
         }else if(res_id == R.id.action_back_friend){
 
-            Toast.makeText(getApplicationContext(), "Back", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Back", Toast.LENGTH_LONG).show();
             finish();
 
         }else if (res_id == R.id.action_logout_friend){
 
             mAuth.signOut();
-            Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();
             Intent i = new Intent(this, ActivityLogin.class);
             startActivity(i);
             finish();
@@ -196,5 +202,6 @@ public class ActivityAddFriend extends AppCompatActivity{
 
         return true;
     }
+
 
 }

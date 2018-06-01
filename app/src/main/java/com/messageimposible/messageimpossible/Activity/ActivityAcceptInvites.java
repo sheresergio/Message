@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.messageimposible.messageimpossible.Entity.EntityContact;
 import com.messageimposible.messageimpossible.Entity.EntityInvite;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
@@ -56,7 +57,9 @@ public class ActivityAcceptInvites extends AppCompatActivity{
         //datos del usuario que ha mandado la invitacion
         Bundle b = getIntent().getExtras();
 
-        name.setText(b.getString("username"));
+        id_target = b.getString("id_target");
+        name.setText(id_target);
+        username = b.getString("username");
 
         b_accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +84,44 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
 
     private void AcceptInvite(){
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()){
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                        EntityUsers user = snapshot.getValue(EntityUsers.class);
+
+                        if (user.getUsername().equals(name.getText())){
+
+                            EntityContact contact = new EntityContact();
+                            contact.setEmail(email);
+                            contact.setUsername(username);
+                            user.addFriends(contact);
+
+                            DatabaseReference userReference = databaseReference.child(id_target);
+
+                            userReference.setValue(user);
+
+                            finish();
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         //TODO aceptar invitaciones
 
