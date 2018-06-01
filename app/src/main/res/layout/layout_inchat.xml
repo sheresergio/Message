@@ -58,13 +58,49 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/white"
         android:weightSum="1"
         >
 
         <LinearLayout
+            android:id="@+id/linearbombone"
+            android:layout_above="@id/appbar"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ActivityInchat"
+            android:alpha="0.85"
+            android:layout_gravity="bottom"
+            >
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:background="@color/colorPrimaryDark"
+                app:np_wheelItemCount="3"
+                app:np_value="10"
+                app:np_max="59"
+                app:np_order="descending"
+                app:np_wrapSelectorWheel="false"
+                app:np_textSize="12dp"
+                app:np_selectedTextSize="13dp"
+                app:np_textColor="@color/white"
+                app:np_selectedTextColor="@color/orangeMain"
+                app:np_dividerDistance="30dp"
+                app:np_dividerThickness="0.5dp"
+                app:np_fadingEdgeEnabled="true"
+                app:np_dividerColor="@color/white"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_inchat_bar_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/greyChat"
@@ -73,7 +109,7 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
@@ -87,7 +123,7 @@
 
                     android:id="@+id/et_inchat"
                     android:background="@drawable/rounded_textview"
-                    android:layout_width="match_parent"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/reply"
                     android:inputType="textMultiLine"
@@ -109,8 +145,6 @@
                 android:id="@+id/btn_send"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="-80dp"
-                android:layout_marginStart="-80dp"
                 android:layout_marginBottom="-8dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/ic_send" />
