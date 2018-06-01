@@ -7,7 +7,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,11 +14,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Entity.EntityInvite;
-import com.messageimposible.messageimpossible.Entity.EntityListItemAddFriend;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
-import java.util.ArrayList;
 
 public class ActivitySendInvites extends AppCompatActivity{
 
@@ -100,7 +97,6 @@ public class ActivitySendInvites extends AppCompatActivity{
 
                             EntityInvite inv = new EntityInvite(username, email);
                             user.addInvites(inv);
-                            Toast.makeText(ActivitySendInvites.this, inv.toString(), Toast.LENGTH_SHORT).show();
 
                             DatabaseReference userReference = databaseReference.child(id_target);
 

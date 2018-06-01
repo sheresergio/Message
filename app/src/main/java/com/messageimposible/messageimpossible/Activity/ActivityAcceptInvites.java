@@ -53,9 +53,9 @@ public class ActivityAcceptInvites extends AppCompatActivity{
         getWindow().setLayout((int)(width * .8), (int)(height * .6));
 
 
-
+        //datos del usuario que ha mandado la invitacion
         Bundle b = getIntent().getExtras();
-        //TODO bundle attributes
+
         name.setText(b.getString("username"));
 
         b_accept.setOnClickListener(new View.OnClickListener() {

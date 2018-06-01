@@ -22,17 +22,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Activity.ActivityAcceptInvites;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewInvites;
 import com.messageimposible.messageimpossible.Entity.EntityInvite;
-import com.messageimposible.messageimpossible.Entity.EntityListItemAddFriend;
 import com.messageimposible.messageimpossible.Entity.EntityListItemInvites;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentInvites extends Fragment {
 
     private FirebaseAuth mAuth;
@@ -65,7 +60,6 @@ public class FragmentInvites extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent i = new Intent(getContext(), ActivityAcceptInvites.class);
-                //TODO bundle att
                 i.putExtra("username", listInvites.get(position).getUsername());
                 startActivity(i);
 
@@ -78,6 +72,8 @@ public class FragmentInvites extends Fragment {
 
     private ArrayList<EntityListItemInvites> GetlistInvites(){
         final ArrayList<EntityListItemInvites> contactlist = new ArrayList<EntityListItemInvites>();
+
+        //TODO que actualice nada mas tener una nueva invitacion
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -127,5 +123,6 @@ public class FragmentInvites extends Fragment {
 
 
     }
+
 
 }
