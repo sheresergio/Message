@@ -59,5 +59,9 @@
     <string name="cancel">Cancel</string>
     <string name="you_have_recieve_an_invitation_from">You have recieve an invite from:</string>
     <string name="do_you_want_to_accept_it">Do you want to accept it?</string>
+    <string name="profile">Profile Picture</string>
+    <string name="delete_pic">Delete</string>
+    <string name="update_pic">Select</string>
+
 
 </resources>

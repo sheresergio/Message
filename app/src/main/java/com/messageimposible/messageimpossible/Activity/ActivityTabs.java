@@ -1,19 +1,29 @@
 package com.messageimposible.messageimpossible.Activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,11 +44,19 @@ public class ActivityTabs extends AppCompatActivity {
     private ViewPager viewPager;
     private PageAdapter pagerAdapter;
 
+    private Button deletePic;
+    private Button selectPic;
+    private ImageView profilePic;
+
+    private Dialog dialog;
+
+
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
 
     private String USER_NAME;
     private String USER_EMAIL;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -63,6 +81,10 @@ public class ActivityTabs extends AppCompatActivity {
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        deletePic = (Button) findViewById(R.id.deletePic);
+        selectPic = (Button) findViewById(R.id.selectPic);
+        profilePic = (ImageView) findViewById(R.id.profilePic);
 
     }
 
@@ -134,7 +156,14 @@ public class ActivityTabs extends AppCompatActivity {
             i.putExtra("email", USER_EMAIL);
             startActivity(i);
 
-        }else if (res_id == R.id.action_logout){
+        }else if(res_id == R.id.action_profile){
+
+            //Toast.makeText(getApplicationContext(), "add friend", Toast.LENGTH_LONG).show();
+
+            showDialog();
+
+        }
+        else if (res_id == R.id.action_logout){
 
             mAuth.signOut();
             //Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();
@@ -177,6 +206,41 @@ public class ActivityTabs extends AppCompatActivity {
         }
     }
 
+
+    public void showDialog(){
+
+        dialog = new Dialog(ActivityTabs.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_pic_profile);
+        dialog.setTitle("My Custom Dialog");
+
+        Button deletePic = (Button) dialog.findViewById(R.id.deletePic);
+        Button selectPic = (Button) dialog.findViewById(R.id.selectPic);
+
+
+        deletePic.setEnabled(true);
+        selectPic.setEnabled(true);
+
+        deletePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        selectPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "select", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
+        dialog.show();
+
+    }
 
 }
 

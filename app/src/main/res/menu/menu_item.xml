@@ -19,7 +19,7 @@
         />
 
     <item
-        android:id="@+id/profile"
+        android:id="@+id/action_profile"
         android:orderInCategory="100"
         android:icon="@drawable/search_14"
         android:title="@string/profile_pic"
