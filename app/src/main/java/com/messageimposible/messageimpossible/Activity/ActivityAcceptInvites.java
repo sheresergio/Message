@@ -69,8 +69,6 @@ public class ActivityAcceptInvites extends AppCompatActivity{
         name.setText(name_target);
         username = b.getString("username");
 
-        Toast.makeText(this, email_target, Toast.LENGTH_SHORT).show();
-
         b_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +108,7 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
                         if (userMe.getId().equals(currentUser.getUid())){
 
+                            //Todo no funciona este email, QUITAR EMAIL DE CONTACTO???
                             email = userMe.getEmail();
 
                             EntityContact myFriend = new EntityContact();
@@ -123,9 +122,6 @@ public class ActivityAcceptInvites extends AppCompatActivity{
                             DatabaseReference userReference = databaseReference.child(currentUser.getUid());
 
                             userReference.setValue(userMe);
-
-                            Toast.makeText(ActivityAcceptInvites.this, email_target + id_target + name_target, Toast.LENGTH_SHORT).show();
-
 
                         }
 

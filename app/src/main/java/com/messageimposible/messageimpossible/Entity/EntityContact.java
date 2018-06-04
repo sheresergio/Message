@@ -1,15 +1,22 @@
 package com.messageimposible.messageimpossible.Entity;
 
+import com.messageimposible.messageimpossible.R;
+
 public class EntityContact {
 
     private String id;
+    private int img;
     private String username;
     private String email;
 
     public EntityContact() {
+
+        this.img = R.mipmap.message_impossible_icon;
+
     }
 
     public EntityContact(String id, String username, String email) {
+        this.img = R.mipmap.message_impossible_icon;
         this.id = id;
         this.username = username;
         this.email = email;
@@ -21,6 +28,14 @@ public class EntityContact {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
     }
 
     public String getUsername() {
