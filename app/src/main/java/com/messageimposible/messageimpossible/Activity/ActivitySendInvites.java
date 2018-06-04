@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,7 +62,7 @@ public class ActivitySendInvites extends AppCompatActivity{
         id_target = b.getString("id_target");
         username = b.getString("username");
         email = b.getString("email");
-        user_id = b.getString("user_id");
+        user_id = b.getString("id");
 
         b_accept.setOnClickListener(new View.OnClickListener() {
             @Override

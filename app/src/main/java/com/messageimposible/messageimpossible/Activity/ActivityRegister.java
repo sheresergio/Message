@@ -82,9 +82,9 @@ public class ActivityRegister extends AppCompatActivity{
                                         user.setEmail(email);                                           //give an email to user
                                         user.setUsername(name);                                         //give a name to the user
                                         FirebaseUser currentUser = mAuth.getCurrentUser();              //get the reference of the current user logged
-                                        user.setId(currentUser.getUid());                               //give an id to the user
                                         DatabaseReference reference =
                                                 database.getReference("users/"+currentUser.getUid());//give the reference to Firebase of an user to be created on the node users with the id from UID
+                                        user.setId(currentUser.getUid());                               //give an id to the user
                                         reference.setValue(user);                                       //create the user in the database
 
                                         Intent i = new Intent(ActivityRegister.this, ActivityTabs.class);

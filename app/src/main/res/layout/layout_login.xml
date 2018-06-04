@@ -58,7 +58,7 @@
             android:hint="@string/email_hint"
             android:layout_margin="5dp"
             android:padding="5dp"
-            android:inputType="text" />
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/et_password_login"

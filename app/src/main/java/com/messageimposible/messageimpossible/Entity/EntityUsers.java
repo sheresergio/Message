@@ -58,6 +58,24 @@ public class EntityUsers {
 
     }
 
+    public void deleteInvite(String email){
+
+        int i = 0;
+
+        for (EntityInvite invite: invites){
+
+            if (invite.getEmail().equals(email)){
+
+                invites.remove(i);
+
+            }
+
+            i++;
+
+        }
+
+    }
+
     public String getId() {
         return id;
     }

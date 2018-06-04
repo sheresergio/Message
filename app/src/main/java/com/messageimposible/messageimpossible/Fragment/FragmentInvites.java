@@ -84,7 +84,9 @@ public class FragmentInvites extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent i = new Intent(getContext(), ActivityAcceptInvites.class);
-                i.putExtra("id_target", listInvites.get(position).getUsername());
+                i.putExtra("id_target", listInvites.get(position).getId());
+                i.putExtra("name_target", listInvites.get(position).getUsername());
+                i.putExtra("email_target", listInvites.get(position).getEmail());
                 i.putExtra("username", USER_NAME);
                 startActivity(i);
 
@@ -121,6 +123,7 @@ public class FragmentInvites extends Fragment {
 
                                     contact.setUsername(invite.getUsername());
                                     contact.setEmail(invite.getEmail());
+                                    contact.setId(invite.getId());
 
                                     contactlist.add(contact);
 
