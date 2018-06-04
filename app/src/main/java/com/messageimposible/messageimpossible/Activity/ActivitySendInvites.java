@@ -15,11 +15,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Entity.EntityInvite;
-import com.messageimposible.messageimpossible.Entity.EntityListItemAddFriend;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
-import java.util.ArrayList;
 
 public class ActivitySendInvites extends AppCompatActivity{
 
@@ -29,6 +27,7 @@ public class ActivitySendInvites extends AppCompatActivity{
     private String email;
     private String username;
     private String id_target;
+    private String user_id;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -63,6 +62,7 @@ public class ActivitySendInvites extends AppCompatActivity{
         id_target = b.getString("id_target");
         username = b.getString("username");
         email = b.getString("email");
+        user_id = b.getString("id");
 
         b_accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,9 +98,8 @@ public class ActivitySendInvites extends AppCompatActivity{
 
                         if (user.getUsername().equals(name.getText())){
 
-                            EntityInvite inv = new EntityInvite(username, email);
+                            EntityInvite inv = new EntityInvite(user_id, username, email);
                             user.addInvites(inv);
-                            Toast.makeText(ActivitySendInvites.this, inv.toString(), Toast.LENGTH_SHORT).show();
 
                             DatabaseReference userReference = databaseReference.child(id_target);
 

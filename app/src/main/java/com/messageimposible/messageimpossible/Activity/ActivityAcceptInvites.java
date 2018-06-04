@@ -9,11 +9,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.messageimposible.messageimpossible.Entity.EntityContact;
 import com.messageimposible.messageimpossible.Entity.EntityInvite;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
@@ -23,12 +26,15 @@ public class ActivityAcceptInvites extends AppCompatActivity{
     private TextView name;
     private Button b_accept;
     private Button b_cancel;
-    private String email;
+    private String email_target;
     private String username;
+    private String email;
     private String id_target;
+    private String name_target;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +47,7 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("users");
+        mAuth = FirebaseAuth.getInstance();
 
         //coge las medidas de la pantalla
         DisplayMetrics dm = new DisplayMetrics();
@@ -53,10 +60,14 @@ public class ActivityAcceptInvites extends AppCompatActivity{
         getWindow().setLayout((int)(width * .8), (int)(height * .6));
 
 
-
+        //datos del usuario que ha mandado la invitacion
         Bundle b = getIntent().getExtras();
-        //TODO bundle attributes
-        name.setText(b.getString("username"));
+
+        id_target = b.getString("id_target");
+        name_target = b.getString("name_target");
+        email_target=b.getString("email_target");
+        name.setText(name_target);
+        username = b.getString("username");
 
         b_accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +82,7 @@ public class ActivityAcceptInvites extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 //no acepta la peticion de amistad y se borra de invites
-                DenyInvite();
+                //DenyInvite();
                 finish();
             }
         });
@@ -82,14 +93,116 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
     private void AcceptInvite(){
 
-        //TODO aceptar invitaciones
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()){
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                        EntityUsers user = snapshot.getValue(EntityUsers.class);
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        EntityUsers userMe = snapshot.getValue(EntityUsers.class);
+
+                        if (userMe.getId().equals(currentUser.getUid())){
+
+                            //Todo no funciona este email, QUITAR EMAIL DE CONTACTO???
+                            email = userMe.getEmail();
+
+                            EntityContact myFriend = new EntityContact();
+                            myFriend.setEmail(email_target);
+                            myFriend.setId(id_target);
+                            myFriend.setUsername(name_target);
+                            userMe.addFriends(myFriend);
+
+                            userMe.deleteInvite(email_target);
+
+                            DatabaseReference userReference = databaseReference.child(currentUser.getUid());
+
+                            userReference.setValue(userMe);
+
+                        }
+
+                        if (user.getUsername().equals(name.getText())){
+
+                            EntityContact contact = new EntityContact();
+                            contact.setEmail(email);
+                            contact.setUsername(username);
+                            contact.setId(currentUser.getUid());
+                            user.addFriends(contact);
+
+                            user.deleteInvite(email);
+
+                            DatabaseReference userReference = databaseReference.child(id_target);
+
+                            userReference.setValue(user);
+
+                            finish();
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
     private void DenyInvite(){
 
-        //TODO rechazar invitaciones
+        //TODO HACER EL BOTON DENY FUNCIONAL
 
+        /*
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()){
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                        EntityUsers user = snapshot.getValue(EntityUsers.class);
+
+                        if (user.getUsername().equals(name.getText())){
+
+                            EntityContact contact = new EntityContact();
+                            contact.setEmail(email_target);
+                            contact.setUsername(username);
+                            user.addFriends(contact);
+
+                            user.deleteInvite(email_target);
+
+                            DatabaseReference userReference = databaseReference.child(id_target);
+
+                            userReference.setValue(user);
+
+                            finish();
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+*/
     }
 
 }

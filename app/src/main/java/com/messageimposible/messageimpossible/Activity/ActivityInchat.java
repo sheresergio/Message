@@ -36,11 +36,14 @@ public class ActivityInchat extends AppCompatActivity {
     private Button b_send;
     private Button b_bomb;
     private ImageView target_img;
-    private TextView target_name;
+    private TextView tv_name;
     private EditText txt_message;
     private RecyclerView rv_message;
     private LinearLayout linearbombone;
     private LinearLayout linearinchatbarbottom;
+    private String id_owner;
+    private String id_target;
+    private String name_target;
 
     private AdapterMessage adapter;
 
@@ -54,26 +57,37 @@ public class ActivityInchat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_inchat);
 
+        Bundle b = getIntent().getExtras();
+        id_target = b.getString("id_target");
+        id_owner = b.getString("id_owner");
+        name_target = b.getString("name_target");
+
+
         b_send = findViewById(R.id.btn_send);
         b_bomb = findViewById(R.id.btn_bomb);
         target_img = findViewById(R.id.iv_target_img);
-        target_name = findViewById(R.id.tv_targetName);
+        tv_name = findViewById(R.id.tv_targetName);
         txt_message = findViewById(R.id.et_inchat);
         rv_message = findViewById(R.id.rv_inchat);
+
+        tv_name.setText(name_target);
 
         linearinchatbarbottom = findViewById(R.id.linear_inchat_bar_bottom);
         linearbombone = findViewById(R.id.linearbombone);
         linearbombone.setVisibility(View.GONE);
 
         target_img = findViewById(R.id.iv_target_img);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.guy1);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        target_img.setImageDrawable(roundedBitmapDrawable);
+
+        //todo foto
+
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.guy1);
+        //RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        //roundedBitmapDrawable.setCircular(true);
+        //target_img.setImageDrawable(roundedBitmapDrawable);
 
         //firebase
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("chat");
+        databaseReference = database.getReference("chats/"+id_owner+"-"+id_target);
         mAuth = FirebaseAuth.getInstance();
 
         adapter = new AdapterMessage(this);
@@ -94,6 +108,11 @@ public class ActivityInchat extends AppCompatActivity {
                         if(linearbombone.getVisibility()== View.VISIBLE){
                             //SEND MESSAGE WITH SELF DESTRUCTION
                         }else{
+
+                            //todo - comparar los ids y asignar una posicion general para todos
+                            //todo - o hacer un if
+                            //todo - if ( (id(owner) + "-" + id(target)) || (id(target) + "-" + id(owner)) )
+
                             DatabaseReference reference = database.getReference("users/"+currentUser.getUid());
 
                             reference.addListenerForSingleValueEvent(new ValueEventListener() {

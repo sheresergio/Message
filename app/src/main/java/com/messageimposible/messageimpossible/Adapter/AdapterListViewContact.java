@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.messageimposible.messageimpossible.Entity.EntityContact;
 import com.messageimposible.messageimpossible.Entity.EntityListItemContact;
 import com.messageimposible.messageimpossible.R;
 
@@ -16,9 +17,9 @@ import java.util.ArrayList;
 
 public class AdapterListViewContact extends BaseAdapter {
     private Context context;
-    private ArrayList<EntityListItemContact> listItems;
+    private ArrayList<EntityContact> listItems;
 
-    public AdapterListViewContact(Context context, ArrayList<EntityListItemContact> list) {
+    public AdapterListViewContact(Context context, ArrayList<EntityContact> list) {
         this.context = context;
         this.listItems = list;
 
@@ -44,7 +45,7 @@ public class AdapterListViewContact extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        EntityListItemContact item = (EntityListItemContact) getItem(position);
+        EntityContact item = (EntityContact) getItem(position);
 
         convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_contacts, null);
 
@@ -55,8 +56,9 @@ public class AdapterListViewContact extends BaseAdapter {
 
         img.setImageResource(item.getImg());
         name.setText(item.getUsername());
-        online.setText(item.getOnline());
-        last_connection.setText(item.getLastConnection());
+        //todo
+        online.setText("online");
+        last_connection.setText("last connection");
 
         return convertView;
 

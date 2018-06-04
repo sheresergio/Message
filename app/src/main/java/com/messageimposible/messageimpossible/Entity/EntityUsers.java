@@ -1,11 +1,14 @@
 package com.messageimposible.messageimpossible.Entity;
 
+import com.messageimposible.messageimpossible.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntityUsers {
 
     private String id;
+    private int img;
     private String username;
     private String email;
     private List<EntityContact> contacts = new ArrayList<>();
@@ -13,14 +16,35 @@ public class EntityUsers {
 
     public EntityUsers() {
 
+        this.img = R.mipmap.message_impossible_icon;
+
     }
 
     public EntityUsers(String username, String email) {
+
+        this.img = R.mipmap.message_impossible_icon;
+        this.username = username;
+        this.email = email;
+    }
+
+    public EntityUsers(int img, String username, String email) {
+        this.img = R.mipmap.message_impossible_icon;
+        this.img = img;
         this.username = username;
         this.email = email;
     }
 
     public EntityUsers(String username, String email, List<EntityContact> conatcts, List<EntityInvite> invites) {
+
+        this.img = R.mipmap.message_impossible_icon;
+        this.username = username;
+        this.email = email;
+        this.contacts = conatcts;
+        this.invites = invites;
+    }
+
+    public EntityUsers(int img, String username, String email, List<EntityContact> conatcts, List<EntityInvite> invites) {
+        this.img = img;
         this.username = username;
         this.email = email;
         this.contacts = conatcts;
@@ -39,12 +63,38 @@ public class EntityUsers {
 
     }
 
+    public void deleteInvite(String email){
+
+        int i = 0;
+
+        for (EntityInvite invite: invites){
+
+            if (invite.getEmail().equals(email)){
+
+                invites.remove(i);
+
+            }
+
+            i++;
+
+        }
+
+    }
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
     }
 
     public String getUsername() {

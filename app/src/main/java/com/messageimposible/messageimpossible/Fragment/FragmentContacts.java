@@ -10,10 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Activity.ActivityInchat;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewContact;
+import com.messageimposible.messageimpossible.Entity.EntityContact;
+import com.messageimposible.messageimpossible.Entity.EntityInvite;
 import com.messageimposible.messageimpossible.Entity.EntityListItemContact;
+import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
@@ -23,14 +34,24 @@ import java.util.ArrayList;
  */
 public class FragmentContacts extends Fragment {
 
-    private ArrayList<EntityListItemContact> listContact;
+    private ArrayList<EntityContact> listContact;
     private ListView lv;
     private AdapterListViewContact adapter;
+
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private FirebaseUser currentUser;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        databaseReference = database.getReference("users");
 
         listContact = GetlistContact();
         lv = view.findViewById(R.id.listView_contacts);
@@ -41,9 +62,15 @@ public class FragmentContacts extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                EntityContact contact = (EntityContact) parent.getAdapter().getItem(position);
+
                 Intent i = new Intent(getActivity(), ActivityInchat.class);
-                i.putExtra("position", position);
+                i.putExtra("id_target", contact.getId());
+                i.putExtra("id_owner", currentUser.getUid());
+                i.putExtra("name_target", contact.getUsername());
+                i.putExtra("img_target", contact.getImg());
                 startActivity(i);
+
 
             }
         });
@@ -51,32 +78,61 @@ public class FragmentContacts extends Fragment {
         return view;
     }
 
-    private ArrayList<EntityListItemContact> GetlistContact(){
-        ArrayList<EntityListItemContact> contactlist = new ArrayList<EntityListItemContact>();
+    private ArrayList<EntityContact> GetlistContact(){
+        final ArrayList<EntityContact> contactlist = new ArrayList<>();
 
-        EntityListItemContact contact = new EntityListItemContact();
+        //TODO que actualice nada mas tener un nuevo contacto
 
-        contact.setImg(R.drawable.facebook_icon);
-        contact.setUsername("Topher");
-        contact.setOnline("ONLINE");
-        contact.setLastConnection("20 Apr");
-        contactlist.add(contact);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
-        contact = new EntityListItemContact();
-        contact.setImg(R.drawable.mag_09);
-        contact.setUsername("Mary");
-        contact.setOnline("ONLINE");
-        contact.setLastConnection("just now");
-        contactlist.add(contact);
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                contactlist.clear();
+                if (dataSnapshot.exists()){
 
-        contact = new EntityListItemContact();
-        contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setUsername("Estalin");
-        contact.setOnline("OFFLINE");
-        contact.setLastConnection("Yesterday");
-        contactlist.add(contact);
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                        EntityUsers user = snapshot.getValue(EntityUsers.class);
+
+                        if (user.getId().equals(currentUser.getUid())){
+
+                            if (!user.getContacts().isEmpty()){
+
+                                for(EntityContact contacts: user.getContacts()){
+
+                                    EntityContact contact = new EntityContact();
+
+                                    contact.setImg(contacts.getImg());
+                                    contact.setUsername(contacts.getUsername());
+                                    contact.setEmail(contacts.getEmail());
+                                    contact.setId(contacts.getId());
+
+                                    contactlist.add(contact);
+
+                                }
+
+                            }
+
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         return contactlist;
+
+
     }
+
 
 }

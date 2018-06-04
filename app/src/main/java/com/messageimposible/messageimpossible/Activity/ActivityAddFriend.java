@@ -19,21 +19,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewAddFriend;
-import com.messageimposible.messageimpossible.Entity.EntityListItemAddFriend;
+import com.messageimposible.messageimpossible.Entity.EntityInvite;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityAddFriend extends AppCompatActivity{
 
     private ListView lv;
-    private ArrayList<EntityListItemAddFriend> listContacts;
-    private ArrayList<EntityListItemAddFriend> listFriends;
+    private ArrayList<EntityUsers> listContacts;
+    private ArrayList<EntityUsers> listFriends;
     private AdapterListViewAddFriend adapter;
 
     private String name;
     private String email;
+    private String user_id;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -51,7 +53,7 @@ public class ActivityAddFriend extends AppCompatActivity{
 
             name = b.getString("name");
             email = b.getString("email");
-
+            user_id = b.getString("id");
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -80,20 +82,23 @@ public class ActivityAddFriend extends AppCompatActivity{
                 i.putExtra("id_target", listFriends.get(position).getId());
                 i.putExtra("username", name);
                 i.putExtra("email", email);
+                i.putExtra("id", user_id);
                 startActivity(i);
                 //si confirma debera aparecer una invitacion en la pestaña de invites del taget
 
                 //si el target acepta, debera aparecer en la pestaña de contactos el nuevo amigo aceptado,
                 //tanto en la del target como en la del owner.
-
+                adapter.notifyDataSetChanged();
             }
         });
+
+
 
     }
 
 
-    private ArrayList<EntityListItemAddFriend> GetlistChat(){
-        listContacts = new ArrayList<EntityListItemAddFriend>();
+    private ArrayList<EntityUsers> GetlistChat(){
+        listContacts = new ArrayList<EntityUsers>();
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -104,16 +109,48 @@ public class ActivityAddFriend extends AppCompatActivity{
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                        EntityListItemAddFriend user = snapshot.getValue(EntityListItemAddFriend.class);
+                        EntityUsers user = snapshot.getValue(EntityUsers.class);
 
+                        List<EntityInvite> invites = user.getInvites();
 
-                        if(!user.getUsername().equals(name)){
+                        if (invites.isEmpty()){
 
-                           listContacts.add(user);
+                            if(!user.getUsername().equals(name)){
+
+                                listContacts.add(user);
+
+                            }
+
+                        }else{
+
+                            int sum = 0;
+
+                            for (int i = 0; i<invites.size(); i++){
+
+                                EntityInvite invite = invites.get(i);
+
+                                if (invite.getEmail().equals(email)){
+
+                                    sum = sum +1;
+
+                                }
+
+                            }
+
+                            if (sum != 1){
+
+                                if(!user.getUsername().equals(name)){
+
+                                    listContacts.add(user);
+
+                                }
+
+                            }
 
                         }
 
                     }
+
 
                     adapter.notifyDataSetChanged();
 
@@ -147,17 +184,17 @@ public class ActivityAddFriend extends AppCompatActivity{
 
         if(res_id == R.id.action_search_friend){
 
-            Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_LONG).show();
 
         }else if(res_id == R.id.action_back_friend){
 
-            Toast.makeText(getApplicationContext(), "Back", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Back", Toast.LENGTH_LONG).show();
             finish();
 
         }else if (res_id == R.id.action_logout_friend){
 
             mAuth.signOut();
-            Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();
             Intent i = new Intent(this, ActivityLogin.class);
             startActivity(i);
             finish();
@@ -165,5 +202,6 @@ public class ActivityAddFriend extends AppCompatActivity{
 
         return true;
     }
+
 
 }

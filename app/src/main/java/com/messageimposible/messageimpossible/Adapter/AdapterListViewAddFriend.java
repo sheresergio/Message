@@ -9,17 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.messageimposible.messageimpossible.Entity.EntityListItemAddFriend;
-import com.messageimposible.messageimpossible.Entity.EntityListItemChat;
+import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
 
 public class AdapterListViewAddFriend extends BaseAdapter {
     private Context context;
-    private ArrayList<EntityListItemAddFriend> listItems;
+    private ArrayList<EntityUsers> listItems;
 
-    public AdapterListViewAddFriend(Context context, ArrayList<EntityListItemAddFriend> list) {
+    public AdapterListViewAddFriend(Context context, ArrayList<EntityUsers> list) {
         this.context = context;
         this.listItems = list;
 
@@ -45,7 +44,7 @@ public class AdapterListViewAddFriend extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        EntityListItemAddFriend item = (EntityListItemAddFriend) getItem(position);
+        EntityUsers item = (EntityUsers) getItem(position);
 
         convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_add_friend, null);
 
