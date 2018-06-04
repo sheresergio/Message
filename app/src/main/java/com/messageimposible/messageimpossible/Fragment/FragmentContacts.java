@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -61,9 +62,15 @@ public class FragmentContacts extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                EntityContact contact = (EntityContact) parent.getAdapter().getItem(position);
+
                 Intent i = new Intent(getActivity(), ActivityInchat.class);
-                i.putExtra("position", position);
+                i.putExtra("id_target", contact.getId());
+                i.putExtra("id_owner", currentUser.getUid());
+                i.putExtra("name_target", contact.getUsername());
+                i.putExtra("img_target", contact.getImg());
                 startActivity(i);
+
 
             }
         });
@@ -74,7 +81,7 @@ public class FragmentContacts extends Fragment {
     private ArrayList<EntityContact> GetlistContact(){
         final ArrayList<EntityContact> contactlist = new ArrayList<>();
 
-        //TODO que actualice nada mas tener una nueva invitacion
+        //TODO que actualice nada mas tener un nuevo contacto
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 

@@ -160,6 +160,8 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
     private void DenyInvite(){
 
+        //TODO HACER EL BOTON DENY FUNCIONAL
+
         /*
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
