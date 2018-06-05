@@ -2,27 +2,25 @@ package com.messageimposible.messageimpossible.Entity;
 
 public class EntityMessage {
 
-    //private int id;
-    private String username;
+    private String id;
     private String message;
 
     public EntityMessage(){
     }
 
-    public EntityMessage(String name, String message){//int id
+    public EntityMessage(String id, String message){//int id
 
-        //this.id = id;
+        this.id = id;
         this.message= message;
-        this.username = name;
 
     }
 
-    public String getUsername() {
-        return username;
+    public String getId() {
+        return id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getMessage() {

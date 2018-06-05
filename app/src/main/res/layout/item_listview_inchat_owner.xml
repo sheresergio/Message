@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
+        android:id="@+id/layout_card"
         android:background="@drawable/answer"
         android:orientation="vertical"
         android:layout_width="250dp"

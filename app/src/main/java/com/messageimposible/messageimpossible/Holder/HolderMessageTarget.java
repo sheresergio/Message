@@ -10,16 +10,16 @@ import com.messageimposible.messageimpossible.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class HolderMessage extends RecyclerView.ViewHolder{
+public class HolderMessageTarget extends RecyclerView.ViewHolder{
 
-    TextView message;
-    TextView time;
+    private TextView message;
+    private TextView time;
 
-    public HolderMessage(View itemView) {
+    public HolderMessageTarget(View itemView) {
         super(itemView);
 
-        message = itemView.findViewById(R.id.message_owner);
-        time = itemView.findViewById(R.id.time_owner);
+        message = itemView.findViewById(R.id.message_target);
+        time = itemView.findViewById(R.id.time_target);
 
     }
 

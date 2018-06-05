@@ -13,8 +13,8 @@ public class EntityMessageOwner extends EntityMessage{
         this.time = time;
     }
 
-    public EntityMessageOwner(String name, String message, Map time) {
-        super(name, message);
+    public EntityMessageOwner(String id, String message, Map time) {
+        super(id, message);
         this.time = time;
     }
 
