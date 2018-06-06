@@ -63,13 +63,13 @@ public class EntityUsers {
 
     }
 
-    public void deleteInvite(String email){
+    public void deleteInvite(String s){
 
         int i = 0;
 
         for (EntityInvite invite: invites){
 
-            if (invite.getEmail().equals(email)){
+            if (invite.getId().equals(s)){
 
                 invites.remove(i);
 

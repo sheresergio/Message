@@ -82,7 +82,7 @@ public class ActivityAcceptInvites extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 //no acepta la peticion de amistad y se borra de invites
-                //DenyInvite();
+                DenyInvite();
                 finish();
             }
         });
@@ -114,7 +114,7 @@ public class ActivityAcceptInvites extends AppCompatActivity{
                             myFriend.setUsername(name_target);
                             userMe.addFriends(myFriend);
 
-                            userMe.deleteInvite(email_target);
+                            userMe.deleteInvite(id_target);
 
                             DatabaseReference userReference = databaseReference.child(currentUser.getUid());
 
@@ -122,14 +122,16 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
                         }
 
-                        if (user.getUsername().equals(name.getText())){
+                        if (user.getId().equals(id_target)){
 
                             EntityContact contact = new EntityContact();
                             contact.setUsername(username);
                             contact.setId(currentUser.getUid());
                             user.addFriends(contact);
 
-                            user.deleteInvite(email);
+                            Toast.makeText(ActivityAcceptInvites.this, email, Toast.LENGTH_SHORT).show();
+
+                            user.deleteInvite(currentUser.getUid());
 
                             DatabaseReference userReference = databaseReference.child(id_target);
 
@@ -156,9 +158,6 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
     private void DenyInvite(){
 
-        //TODO HACER EL BOTON DENY FUNCIONAL
-
-        /*
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -168,24 +167,20 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                        EntityUsers user = snapshot.getValue(EntityUsers.class);
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        EntityUsers userMe = snapshot.getValue(EntityUsers.class);
 
-                        if (user.getUsername().equals(name.getText())){
+                        if (userMe.getId().equals(currentUser.getUid())){
 
-                            EntityContact contact = new EntityContact();
-                            contact.setEmail(email_target);
-                            contact.setUsername(username);
-                            user.addFriends(contact);
+                            userMe.deleteInvite(id_target);
 
-                            user.deleteInvite(email_target);
+                            DatabaseReference userReference = databaseReference.child(currentUser.getUid());
 
-                            DatabaseReference userReference = databaseReference.child(id_target);
-
-                            userReference.setValue(user);
-
-                            finish();
+                            userReference.setValue(userMe);
 
                         }
+
+
 
                     }
 
@@ -198,7 +193,6 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
             }
         });
-*/
     }
 
 }
