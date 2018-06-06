@@ -104,7 +104,6 @@ public class FragmentContacts extends Fragment {
 
                                     contact.setImg(contacts.getImg());
                                     contact.setUsername(contacts.getUsername());
-                                    contact.setEmail(contacts.getEmail());
                                     contact.setId(contacts.getId());
 
                                     contactlist.add(contact);

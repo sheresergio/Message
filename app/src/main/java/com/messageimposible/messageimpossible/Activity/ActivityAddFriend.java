@@ -13,12 +13,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewAddFriend;
+import com.messageimposible.messageimpossible.Entity.EntityContact;
 import com.messageimposible.messageimpossible.Entity.EntityInvite;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
@@ -26,7 +28,7 @@ import com.messageimposible.messageimpossible.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityAddFriend extends AppCompatActivity{
+public class ActivityAddFriend extends AppCompatActivity {
 
     private ListView lv;
     private ArrayList<EntityUsers> listContacts;
@@ -40,6 +42,7 @@ public class ActivityAddFriend extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private FirebaseUser currentUser;
 
 
     @Override
@@ -49,7 +52,7 @@ public class ActivityAddFriend extends AppCompatActivity{
 
         Bundle b = getIntent().getExtras();
 
-        if(b.getString("name")!= null){
+        if (b.getString("name") != null) {
 
             name = b.getString("name");
             email = b.getString("email");
@@ -93,11 +96,10 @@ public class ActivityAddFriend extends AppCompatActivity{
         });
 
 
-
     }
 
 
-    private ArrayList<EntityUsers> GetlistChat(){
+    private ArrayList<EntityUsers> GetlistChat() {
         listContacts = new ArrayList<EntityUsers>();
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -105,41 +107,76 @@ public class ActivityAddFriend extends AppCompatActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listContacts.clear();
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                        currentUser = mAuth.getCurrentUser();
 
                         EntityUsers user = snapshot.getValue(EntityUsers.class);
 
                         List<EntityInvite> invites = user.getInvites();
 
-                        if (invites.isEmpty()){
+                        List<EntityContact> contacts = user.getContacts();
 
-                            if(!user.getUsername().equals(name)){
+                        if (invites.isEmpty()) {
 
-                                listContacts.add(user);
+                            if (contacts.isEmpty()) {
 
-                            }
+                                if (!user.getUsername().equals(name)) {
 
-                        }else{
+                                    listContacts.add(user);
 
-                            int sum = 0;
+                                }
 
-                            for (int i = 0; i<invites.size(); i++){
+                            } else {
 
-                                EntityInvite invite = invites.get(i);
+                                int sum = 0;
 
-                                if (invite.getEmail().equals(email)){
+                                for (int i = 0; i < contacts.size(); i++) {
 
-                                    sum = sum +1;
+                                    EntityContact contact = contacts.get(i);
+
+                                    if (contact.getId().equals(currentUser.getUid())) {
+
+                                        sum = sum + 1;
+
+                                    }
+
+                                }
+
+                                if (sum != 1) {
+
+                                    if (!user.getUsername().equals(name)) {
+
+                                        listContacts.add(user);
+
+                                    }
 
                                 }
 
                             }
 
-                            if (sum != 1){
 
-                                if(!user.getUsername().equals(name)){
+                        } else {
+
+                            int sum = 0;
+
+                            for (int i = 0; i < invites.size(); i++) {
+
+                                EntityInvite invite = invites.get(i);
+
+                                if (invite.getEmail().equals(email)) {
+
+                                    sum = sum + 1;
+
+                                }
+
+                            }
+
+                            if (sum != 1) {
+
+                                if (!user.getUsername().equals(name)) {
 
                                     listContacts.add(user);
 
@@ -172,7 +209,7 @@ public class ActivityAddFriend extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_item_friend,menu);
+        inflater.inflate(R.menu.menu_item_friend, menu);
 
         return true;
     }
@@ -182,16 +219,16 @@ public class ActivityAddFriend extends AppCompatActivity{
 
         int res_id = item.getItemId();
 
-        if(res_id == R.id.action_search_friend){
+        if (res_id == R.id.action_search_friend) {
 
             //Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_LONG).show();
 
-        }else if(res_id == R.id.action_back_friend){
+        } else if (res_id == R.id.action_back_friend) {
 
             //Toast.makeText(getApplicationContext(), "Back", Toast.LENGTH_LONG).show();
             finish();
 
-        }else if (res_id == R.id.action_logout_friend){
+        } else if (res_id == R.id.action_logout_friend) {
 
             mAuth.signOut();
             //Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();

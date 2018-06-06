@@ -7,7 +7,6 @@ public class EntityContact {
     private String id;
     private int img;
     private String username;
-    private String email;
 
     public EntityContact() {
 
@@ -19,7 +18,6 @@ public class EntityContact {
         this.img = R.mipmap.message_impossible_icon;
         this.id = id;
         this.username = username;
-        this.email = email;
     }
 
     public String getId() {
@@ -46,11 +44,4 @@ public class EntityContact {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

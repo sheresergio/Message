@@ -108,11 +108,8 @@ public class ActivityAcceptInvites extends AppCompatActivity{
 
                         if (userMe.getId().equals(currentUser.getUid())){
 
-                            //Todo no funciona este email, QUITAR EMAIL DE CONTACTO???
-                            email = userMe.getEmail();
 
                             EntityContact myFriend = new EntityContact();
-                            myFriend.setEmail(email_target);
                             myFriend.setId(id_target);
                             myFriend.setUsername(name_target);
                             userMe.addFriends(myFriend);
@@ -128,7 +125,6 @@ public class ActivityAcceptInvites extends AppCompatActivity{
                         if (user.getUsername().equals(name.getText())){
 
                             EntityContact contact = new EntityContact();
-                            contact.setEmail(email);
                             contact.setUsername(username);
                             contact.setId(currentUser.getUid());
                             user.addFriends(contact);
