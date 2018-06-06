@@ -28,7 +28,6 @@ public class ActivityAcceptInvites extends AppCompatActivity{
     private Button b_cancel;
     private String email_target;
     private String username;
-    private String email;
     private String id_target;
     private String name_target;
 
@@ -128,8 +127,6 @@ public class ActivityAcceptInvites extends AppCompatActivity{
                             contact.setUsername(username);
                             contact.setId(currentUser.getUid());
                             user.addFriends(contact);
-
-                            Toast.makeText(ActivityAcceptInvites.this, email, Toast.LENGTH_SHORT).show();
 
                             user.deleteInvite(currentUser.getUid());
 

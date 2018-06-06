@@ -54,7 +54,7 @@ public class AdapterListViewChat extends BaseAdapter {
         TextView last_connection = convertView.findViewById(R.id.last_connection_chat);
 
         img.setImageResource(item.getImg());
-        name.setText(item.getName());
+        name.setText(item.getUsername());
         last_message.setText(item.getLastMessage());
         last_connection.setText(item.getLastConnection());
 

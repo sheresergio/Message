@@ -13,9 +13,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Activity.ActivityInchat;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewChat;
+import com.messageimposible.messageimpossible.Entity.EntityContact;
 import com.messageimposible.messageimpossible.Entity.EntityListItemChat;
+import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
@@ -30,13 +39,22 @@ public class FragmentChats extends Fragment {
     private AdapterListViewChat adapter;
     private ArrayList<EntityListItemChat> listContact;
 
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private FirebaseUser currentUser;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
-        //Toast.makeText(getContext(), username, Toast.LENGTH_LONG).show();
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        databaseReference = database.getReference("chats");
+
 
         listContact = GetlistChat();
         lv = view.findViewById(R.id.listView_chats);
@@ -44,18 +62,19 @@ public class FragmentChats extends Fragment {
         lv.setAdapter(adapter);
 
 
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String name = listContact.get(position).getName();
-                int img = listContact.get(position).getImg();
+                EntityListItemChat contact = (EntityListItemChat) parent.getAdapter().getItem(position);
 
                 Intent i = new Intent(getActivity(), ActivityInchat.class);
-                i.putExtra("name", name);
-                i.putExtra("img", img);
+                i.putExtra("id_target", contact.getId());
+                i.putExtra("id_owner", currentUser.getUid());
+                i.putExtra("name_target", contact.getUsername());
+                i.putExtra("img_target", contact.getImg());
                 startActivity(i);
+
 
             }
         });
@@ -63,76 +82,80 @@ public class FragmentChats extends Fragment {
         return view;
     }
 
-    private ArrayList<EntityListItemChat> GetlistChat(){
-        ArrayList<EntityListItemChat> contactlist = new ArrayList<EntityListItemChat>();
+    private ArrayList<EntityListItemChat> GetlistChat() {
+        final ArrayList<EntityListItemChat> contactlist = new ArrayList<>();
 
-        EntityListItemChat contact = new EntityListItemChat();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
-        contact.setImg(R.drawable.facebook_icon);
-        contact.setName("Topher");
-        contact.setLastMessage("Hasta nunqui");
-        contact.setLastConnection("20 Apr");
-        contactlist.add(contact);
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                contactlist.clear();
+                if (dataSnapshot.exists()){
 
-        contact = new EntityListItemChat();
-        contact.setImg(R.drawable.mag_09);
-        contact.setName("Mary");
-        contact.setLastMessage("Hi");
-        contact.setLastConnection("just now");
-        contactlist.add(contact);
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-        contact = new EntityListItemChat();
-        contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setName("Estalin");
-        contact.setLastMessage("Tonto");
-        contact.setLastConnection("Yesterday");
-        contactlist.add(contact);
+                        if (snapshot.toString().contains(currentUser.getUid())) {
 
-        contact = new EntityListItemChat();
-        contact.setImg(R.drawable.mag_09);
-        contact.setName("Mary");
-        contact.setLastMessage("Hi");
-        contact.setLastConnection("just now");
-        contactlist.add(contact);
+                            String full = snapshot.getKey();
+                            String mid = full.replace(currentUser.getUid(), "");
+                            final String end = mid.replace("-", "");
 
-        contact = new EntityListItemChat();
-        contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setName("Estalin");
-        contact.setLastMessage("Tonto");
-        contact.setLastConnection("Yesterday");
-        contactlist.add(contact);
+                            DatabaseReference userReference = database.getReference("users");
 
-        contact = new EntityListItemChat();
-        contact.setImg(R.drawable.mag_09);
-        contact.setName("Mary");
-        contact.setLastMessage("Hi");
-        contact.setLastConnection("just now");
-        contactlist.add(contact);
+                            userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
-        contact = new EntityListItemChat();
-        contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setName("Estalin");
-        contact.setLastMessage("Tonto");
-        contact.setLastConnection("Yesterday");
-        contactlist.add(contact);
+                                    if (dataSnapshot.exists()) {
 
-        contact = new EntityListItemChat();
-        contact.setImg(R.drawable.mag_09);
-        contact.setName("Mary");
-        contact.setLastMessage("Hi");
-        contact.setLastConnection("just now");
-        contactlist.add(contact);
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-        contact = new EntityListItemChat();
-        contact.setImg(R.mipmap.message_impossible_icon);
-        contact.setName("Estalin");
-        contact.setLastMessage("Tonto");
-        contact.setLastConnection("Yesterday");
-        contactlist.add(contact);
+                                            EntityUsers user = snapshot.getValue(EntityUsers.class);
+
+                                            if (user.getId().equals(end)) {
+
+                                                EntityListItemChat chatContact = new EntityListItemChat();
+
+                                                chatContact.setImg(user.getImg());
+                                                chatContact.setId(user.getId());
+                                                chatContact.setUsername(user.getUsername());
+                                                chatContact.setLastMessage("Hola");
+
+                                                contactlist.add(chatContact);
+
+                                            }
+
+                                        }
+
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         return contactlist;
     }
-
 
 }
 

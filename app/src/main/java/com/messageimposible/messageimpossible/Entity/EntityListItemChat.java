@@ -5,23 +5,23 @@ import com.messageimposible.messageimpossible.R;
 public class EntityListItemChat {
 
     private int img;
-    private String name;
+    private String id;
+    private String username;
     private String lastMessage;
     private String lastConnection;
 
     public EntityListItemChat(){
 
         this.img = R.mipmap.message_impossible_icon;
-        this.name = "";
-        this.lastMessage = "";
-        this.lastConnection = "";
+        this.lastConnection = "just now";
 
     }
 
-    public EntityListItemChat(int img, String name, String lastMessage, String lastConnection){
+    public EntityListItemChat(int img, String id, String name, String lastMessage, String lastConnection){
 
         this.img = img;
-        this.name = name;
+        this.id = id;
+        this.username = name;
         this.lastMessage = lastMessage;
         this.lastConnection = lastConnection;
 
@@ -35,12 +35,20 @@ public class EntityListItemChat {
         this.img = img;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String name) {
+        this.username = name;
     }
 
     public String getLastMessage() {

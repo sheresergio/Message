@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.messageimposible.messageimpossible.Entity.EntityContact;
-import com.messageimposible.messageimpossible.Entity.EntityListItemContact;
 import com.messageimposible.messageimpossible.R;
 
 import java.util.ArrayList;
