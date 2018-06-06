@@ -30,7 +30,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -78,6 +77,7 @@ public class ActivityTabs extends AppCompatActivity {
 
     private String USER_NAME;
     private String USER_EMAIL;
+    private String USER_ID;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -183,6 +183,7 @@ public class ActivityTabs extends AppCompatActivity {
             Intent i = new Intent(this, ActivityAddFriend.class);
             i.putExtra("name", USER_NAME);
             i.putExtra("email", USER_EMAIL);
+            i.putExtra("id", USER_ID);
             startActivity(i);
 
         }else if(res_id == R.id.action_profile){
@@ -206,7 +207,8 @@ public class ActivityTabs extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser!=null){
 
             DatabaseReference reference = database.getReference("users/"+currentUser.getUid());
@@ -216,6 +218,7 @@ public class ActivityTabs extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     EntityUsers user = dataSnapshot.getValue(EntityUsers.class);
+                    USER_ID = currentUser.getUid();
                     USER_NAME = user.getUsername();
                     USER_EMAIL = user.getEmail();
                     //Toast.makeText(ActivityTabs.this, USER_NAME , Toast.LENGTH_LONG).show();

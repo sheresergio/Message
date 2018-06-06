@@ -15,7 +15,7 @@ public class EntityInvite {
 
     }
 
-    public EntityInvite(String id, String name, String email){//int id
+    public EntityInvite(String id, String name, String email){
 
         this.id = id;
         this.username = name;

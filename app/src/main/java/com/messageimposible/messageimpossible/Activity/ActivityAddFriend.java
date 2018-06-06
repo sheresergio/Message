@@ -78,7 +78,7 @@ public class ActivityAddFriend extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //que cree un menu emergente donde ponga nombre de la persona a la que quieres invitar
+
 
                 Intent i = new Intent(ActivityAddFriend.this, ActivitySendInvites.class);
                 i.putExtra("name_target", listFriends.get(position).getUsername());
@@ -87,10 +87,7 @@ public class ActivityAddFriend extends AppCompatActivity {
                 i.putExtra("email", email);
                 i.putExtra("id", user_id);
                 startActivity(i);
-                //si confirma debera aparecer una invitacion en la pestaña de invites del taget
 
-                //si el target acepta, debera aparecer en la pestaña de contactos el nuevo amigo aceptado,
-                //tanto en la del target como en la del owner.
                 adapter.notifyDataSetChanged();
             }
         });
@@ -100,7 +97,7 @@ public class ActivityAddFriend extends AppCompatActivity {
 
 
     private ArrayList<EntityUsers> GetlistChat() {
-        listContacts = new ArrayList<EntityUsers>();
+        listContacts = new ArrayList<>();
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 

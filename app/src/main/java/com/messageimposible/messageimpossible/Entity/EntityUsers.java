@@ -20,35 +20,11 @@ public class EntityUsers {
 
     }
 
-    public EntityUsers(String username, String email) {
-
-        this.img = R.mipmap.message_impossible_icon;
-        this.username = username;
-        this.email = email;
-    }
-
-    public EntityUsers(int img, String username, String email) {
-        this.img = R.mipmap.message_impossible_icon;
+    public EntityUsers(String id, int img, String username, String email) {
+        this.id = id;
         this.img = img;
         this.username = username;
         this.email = email;
-    }
-
-    public EntityUsers(String username, String email, List<EntityContact> conatcts, List<EntityInvite> invites) {
-
-        this.img = R.mipmap.message_impossible_icon;
-        this.username = username;
-        this.email = email;
-        this.contacts = conatcts;
-        this.invites = invites;
-    }
-
-    public EntityUsers(int img, String username, String email, List<EntityContact> conatcts, List<EntityInvite> invites) {
-        this.img = img;
-        this.username = username;
-        this.email = email;
-        this.contacts = conatcts;
-        this.invites = invites;
     }
 
     public void addInvites(EntityInvite invite){
