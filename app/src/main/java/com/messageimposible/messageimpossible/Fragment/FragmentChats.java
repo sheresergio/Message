@@ -53,8 +53,7 @@ public class FragmentChats extends Fragment {
         database = FirebaseDatabase.getInstance();
         currentUser = mAuth.getCurrentUser();
         databaseReference = database.getReference("chats");
-
-
+        
         listContact = GetlistChat();
         lv = view.findViewById(R.id.listView_chats);
         adapter = new AdapterListViewChat(this.getActivity(), listContact);
