@@ -1,7 +1,12 @@
 package com.messageimposible.messageimpossible.Activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Adapter.AdapterMessage;
 import com.messageimposible.messageimpossible.Entity.EntityMessageOwner;
 import com.messageimposible.messageimpossible.Entity.EntityMessageTarget;
+import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 public class ActivityInchat extends AppCompatActivity {
@@ -38,6 +45,7 @@ public class ActivityInchat extends AppCompatActivity {
     private String id_owner;
     private String id_target;
     private String name_target;
+    private int name_picture;
 
     private AdapterMessage adapter;
 
@@ -55,6 +63,9 @@ public class ActivityInchat extends AppCompatActivity {
         id_target = b.getString("id_target");
         id_owner = b.getString("id_owner");
         name_target = b.getString("name_target");
+        name_picture = b.getInt("name_picture");
+
+
 
         b_send = findViewById(R.id.btn_send);
         b_bomb = findViewById(R.id.btn_bomb);
@@ -62,6 +73,7 @@ public class ActivityInchat extends AppCompatActivity {
         tv_name = findViewById(R.id.tv_targetName);
         txt_message = findViewById(R.id.et_inchat);
         rv_message = findViewById(R.id.rv_inchat);
+        target_img = findViewById(R.id.iv_target_img);
 
         tv_name.setText(name_target);
 
@@ -80,24 +92,10 @@ public class ActivityInchat extends AppCompatActivity {
 
         //firebase
         database = FirebaseDatabase.getInstance();
-
-        if (id_owner.compareTo(id_target) < 0) {
-
-            databaseReference = database.getReference("chats/" + id_owner + "-" + id_target);
-
-        } else if (id_owner.compareTo(id_target) > 0) {
-
-            databaseReference = database.getReference("chats/" + id_target + "-" + id_owner);
-
-        } else {
-
-            databaseReference = database.getReference("chats/" + id_owner + "-" + id_target);
-
-        }
+        databaseReference = database.getReference("chats/"+id_owner+"-"+id_target);
         mAuth = FirebaseAuth.getInstance();
 
         adapter = new AdapterMessage(this);
-        adapter.setCurrentUserID(id_owner);
 
         LinearLayoutManager l = new LinearLayoutManager(this);
         rv_message.setLayoutManager(l);
@@ -107,26 +105,31 @@ public class ActivityInchat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!txt_message.getText().toString().equals("")) {
+                if(!txt_message.getText().toString().equals("")) {
 
                     FirebaseUser currentUser = mAuth.getCurrentUser();
-                    if (currentUser != null) {
+                    if (currentUser!=null){
 
-                        if (linearbombone.getVisibility() == View.VISIBLE) {
-
+                        if(linearbombone.getVisibility()== View.VISIBLE){
                             //SEND MESSAGE WITH SELF DESTRUCTION
+                        }else{
 
-                        } else {
+                            //todo - comparar los ids y asignar una posicion general para todos
+                            //todo - o hacer un if
+                            //todo - if ( (id(owner) + "-" + id(target)) || (id(target) + "-" + id(owner)) )
 
-                            DatabaseReference reference = database.getReference("users/" + currentUser.getUid());
+                            DatabaseReference reference = database.getReference("users/"+currentUser.getUid());
 
                             reference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
+                                    EntityUsers user = dataSnapshot.getValue(EntityUsers.class);
+                                    String USER_NAME = user.getUsername();
+
                                     databaseReference.push().setValue(
                                             new EntityMessageOwner(
-                                                    id_owner, txt_message.getText().toString(), ServerValue.TIMESTAMP
+                                                    USER_NAME, txt_message.getText().toString(), ServerValue.TIMESTAMP
                                             )
                                     );
 
@@ -138,24 +141,24 @@ public class ActivityInchat extends AppCompatActivity {
                                 public void onCancelled(DatabaseError databaseError) {
 
                                 }
-
                             });
-
                         }
+
+
 
                     }
 
+
+
                 }
-
             }
-
         });
 
         b_bomb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (linearbombone.getVisibility() == View.GONE) {
+                if (linearbombone.getVisibility()== View.GONE) {
                     linearbombone.setVisibility(View.VISIBLE);
                     b_bomb.setBackgroundResource(R.drawable.ic_bomb2);
                     b_send.setBackgroundResource(R.drawable.ic_send1);
@@ -216,9 +219,9 @@ public class ActivityInchat extends AppCompatActivity {
     }
 
 
-    private void setScrollbar() {
+    private void setScrollbar(){
 
-        rv_message.scrollToPosition(adapter.getItemCount() - 1);
+        rv_message.scrollToPosition(adapter.getItemCount()-1);
 
     }
 
