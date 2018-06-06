@@ -2,6 +2,7 @@ package com.messageimposible.messageimpossible.Activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -44,6 +45,7 @@ public class ActivityInchat extends AppCompatActivity {
     private String id_owner;
     private String id_target;
     private String name_target;
+    private int name_picture;
 
     private AdapterMessage adapter;
 
@@ -61,6 +63,8 @@ public class ActivityInchat extends AppCompatActivity {
         id_target = b.getString("id_target");
         id_owner = b.getString("id_owner");
         name_target = b.getString("name_target");
+        name_picture = b.getInt("name_picture");
+
 
 
         b_send = findViewById(R.id.btn_send);
@@ -69,6 +73,7 @@ public class ActivityInchat extends AppCompatActivity {
         tv_name = findViewById(R.id.tv_targetName);
         txt_message = findViewById(R.id.et_inchat);
         rv_message = findViewById(R.id.rv_inchat);
+        target_img = findViewById(R.id.iv_target_img);
 
         tv_name.setText(name_target);
 

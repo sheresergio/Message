@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,8 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.messageimposible.messageimpossible.Activity.ActivityInchat;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewContact;
 import com.messageimposible.messageimpossible.Entity.EntityContact;
-import com.messageimposible.messageimpossible.Entity.EntityInvite;
-import com.messageimposible.messageimpossible.Entity.EntityListItemContact;
 import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
