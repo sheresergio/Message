@@ -62,6 +62,11 @@
     <string name="profile">Profile Picture</string>
     <string name="delete_pic">Delete</string>
     <string name="update_pic">Select</string>
+    <string name="do_you_want_to_delete_you_conversation_with">Do you want to delete you conversation with:</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="delete_chat">Delete Chat</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 
 </resources>

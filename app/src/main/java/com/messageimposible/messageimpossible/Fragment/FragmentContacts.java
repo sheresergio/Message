@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.messageimposible.messageimpossible.Activity.ActivityDeleteChat;
 import com.messageimposible.messageimpossible.Activity.ActivityInchat;
 import com.messageimposible.messageimpossible.Adapter.AdapterListViewContact;
 import com.messageimposible.messageimpossible.Entity.EntityContact;
@@ -38,7 +43,10 @@ public class FragmentContacts extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private DatabaseReference chatReference;
     private FirebaseUser currentUser;
+
+    private int chatExist = 0;
 
     @Nullable
     @Override
@@ -69,6 +77,22 @@ public class FragmentContacts extends Fragment {
                 startActivity(i);
 
 
+            }
+        });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                EntityContact contact = (EntityContact) parent.getAdapter().getItem(position);
+
+                Intent i = new Intent(getActivity(), ActivityDeleteChat.class);
+                i.putExtra("id_target", contact.getId());
+                i.putExtra("id_owner", currentUser.getUid());
+                i.putExtra("name_target", contact.getUsername());
+                startActivity(i);
+
+                return true;
             }
         });
 
@@ -122,9 +146,7 @@ public class FragmentContacts extends Fragment {
             }
         });
 
-
         return contactlist;
-
 
     }
 

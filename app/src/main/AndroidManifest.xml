@@ -38,6 +38,9 @@
         <activity android:name=".Activity.ActivityAcceptInvites"
             android:theme="@style/AppTheme.MyPopupTheme"/>
 
+        <activity android:name=".Activity.ActivityDeleteChat"
+            android:theme="@style/AppTheme.MyPopupTheme"/>
+
     </application>
 
 
