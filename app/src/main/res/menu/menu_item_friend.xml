@@ -12,14 +12,6 @@
         />
 
     <item
-        android:id="@+id/action_logout_friend"
-        android:orderInCategory="100"
-        android:icon="@drawable/search_14"
-        android:title="@string/logout"
-        app:showAsAction="never"
-        />
-
-    <item
         android:id="@+id/action_back_friend"
         android:orderInCategory="100"
         android:icon="@drawable/search_14"

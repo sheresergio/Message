@@ -1,5 +1,6 @@
 package com.messageimposible.messageimpossible.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -10,6 +11,9 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,6 +82,10 @@ public class ActivityInchat extends AppCompatActivity {
         linearinchatbarbottom = findViewById(R.id.linear_inchat_bar_bottom);
         linearbombone = findViewById(R.id.linearbombone);
         linearbombone.setVisibility(View.GONE);
+
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         //todo foto
 
@@ -228,6 +236,34 @@ public class ActivityInchat extends AppCompatActivity {
 
         rv_message.scrollToPosition(adapter.getItemCount() - 1);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_item_inchat, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int res_id = item.getItemId();
+
+        if (res_id == R.id.action_delete_chat) {
+
+            Intent i = new Intent(ActivityInchat.this, ActivityDeleteChat.class);
+            i.putExtra("id_target", id_target);
+            i.putExtra("id_owner", id_owner);
+            i.putExtra("name_target", name_target);
+            startActivity(i);
+
+        }
+
+
+        return true;
     }
 
 

@@ -38,6 +38,11 @@
                 android:textColor="@color/lightGrey"
                 android:textSize="24sp" />
 
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/layout_toolbar_inchat"
+                />
+
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>

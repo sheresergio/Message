@@ -225,13 +225,6 @@ public class ActivityAddFriend extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "Back", Toast.LENGTH_LONG).show();
             finish();
 
-        } else if (res_id == R.id.action_logout_friend) {
-
-            mAuth.signOut();
-            //Toast.makeText(getApplicationContext(), "Loged out", Toast.LENGTH_LONG).show();
-            Intent i = new Intent(this, ActivityLogin.class);
-            startActivity(i);
-            finish();
         }
 
         return true;
