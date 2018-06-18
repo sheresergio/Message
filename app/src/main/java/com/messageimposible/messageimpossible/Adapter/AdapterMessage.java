@@ -99,4 +99,10 @@ public class AdapterMessage extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
+    @Override
+    public void registerAdapterDataObserver(@NonNull RecyclerView.AdapterDataObserver observer) {
+        super.registerAdapterDataObserver(observer);
+
+
+    }
 }

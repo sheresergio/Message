@@ -38,14 +38,17 @@ import com.messageimposible.messageimpossible.Entity.EntityUsers;
 import com.messageimposible.messageimpossible.R;
 
 public class ActivityInchat extends AppCompatActivity {
+
+    //elementos en el layout
     private Button b_send;
     private Button b_bomb;
-    private ImageView target_img;
     private TextView tv_name;
     private EditText txt_message;
     private RecyclerView rv_message;
     private LinearLayout linearbombone;
     private LinearLayout linearinchatbarbottom;
+    private ImageView target_img;
+
     private String id_owner;
     private String id_target;
     private String name_target;
@@ -63,6 +66,7 @@ public class ActivityInchat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_inchat);
 
+        //bundle que recoge info del usuario actual y del usuario al que quieres hablar
         Bundle b = getIntent().getExtras();
         id_target = b.getString("id_target");
         id_owner = b.getString("id_owner");
@@ -71,31 +75,31 @@ public class ActivityInchat extends AppCompatActivity {
 
         b_send = findViewById(R.id.btn_send);
         b_bomb = findViewById(R.id.btn_bomb);
-        target_img = findViewById(R.id.iv_target_img);
         tv_name = findViewById(R.id.tv_targetName);
         txt_message = findViewById(R.id.et_inchat);
         rv_message = findViewById(R.id.rv_inchat);
-        target_img = findViewById(R.id.iv_target_img);
-
-        tv_name.setText(name_target);
-
         linearinchatbarbottom = findViewById(R.id.linear_inchat_bar_bottom);
         linearbombone = findViewById(R.id.linearbombone);
-        linearbombone.setVisibility(View.GONE);
+            linearbombone.setVisibility(View.GONE);
+        target_img = findViewById(R.id.iv_target_img);
 
+        //le damos el nombre del usuario al que queremos escribir al TextView
+        tv_name.setText(name_target);
+
+        //carga la toolbar
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        //todo foto
-
-        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.guy1);
-        //RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        //roundedBitmapDrawable.setCircular(true);
-        //target_img.setImageDrawable(roundedBitmapDrawable);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); //hace que no se carge ek nombre de la app cuando se carga la toolbar
 
         //firebase
         database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+
+        /*
+        Usamos un filtro de IDs para que, a la hora de crear/cargar un chat ocn un usuario,
+        el ID de ese chat siempre sea el mismo y se pueda ver el mismo chat desde los dos usuarios.
+         */
 
         if (id_owner.compareTo(id_target) < 0) {
 
@@ -111,11 +115,13 @@ public class ActivityInchat extends AppCompatActivity {
 
         }
 
-        mAuth = FirebaseAuth.getInstance();
-
+        //Inicializamos el adapter y le pasamos el id del usuario actual para usarlo a la hora de
+        // recibir los mensajes, para separar lso mensajes recibidos de los mensajes enviados
         adapter = new AdapterMessage(this);
         adapter.setCurrentUserID(id_owner);
 
+
+        //utilizamos el LinearLayoutManager para controlar los elementos dentro del RecyclerView
         LinearLayoutManager l = new LinearLayoutManager(this);
         rv_message.setLayoutManager(l);
         rv_message.setAdapter(adapter);
@@ -216,6 +222,8 @@ public class ActivityInchat extends AppCompatActivity {
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
+
+
             }
 
             @Override
@@ -267,4 +275,10 @@ public class ActivityInchat extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
 }
