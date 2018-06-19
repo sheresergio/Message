@@ -60,10 +60,7 @@ public class ActivityTabs extends AppCompatActivity {
     private Button deletePic;
     private Button selectPic;
     private ImageView profile_Pic;
-    //private final Integer PHOTO_PERFIL = 1;
     private static final int PHOTO_PERFIL = 1;
-    //final int REQUEST_CODE_GALLERY = 999;
-    //final int REQUEST_CODE_CAMERA = 1313;
     Bitmap bitmap;
     Uri uri;
 
@@ -91,6 +88,7 @@ public class ActivityTabs extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(pagerAdapter);
 
+        //Firebase
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -271,8 +269,6 @@ public class ActivityTabs extends AppCompatActivity {
                 i.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
                 startActivityForResult(Intent.createChooser(i,"Select Profile Picture"),PHOTO_PERFIL);
 
-
-                //openGallery();
             }
         });
 
@@ -291,106 +287,11 @@ public class ActivityTabs extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    //Glide.with(ActivityTabs.this).load(u.toString()).into(profile_Pic);
                 }
             });
         }
 
     }
 
-    /*
-    public void openGallery(){
-        //Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        //startActivityForResult(gallery, PHOTO_PERFIL);
-
-            Intent intent = new Intent();
-            // Show only images, no videos or anything else
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            // Always show the chooser (if there are multiple options available)
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PHOTO_PERFIL);
-
-    }
-    */
-/*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PHOTO_PERFIL && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            uri = data.getData();
-
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), uri);
-                // Log.d(TAG, String.valueOf(bitmap));
-                Toast.makeText(this, "hey you selected image" + bitmap, Toast.LENGTH_SHORT).show();
-                //profile_Pic.setImageBitmap(bitmap);
-                ImageView profile_Pic =  (ImageView) dialog.findViewById(R.id.profilePic);
-                profile_Pic.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    */
-
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PHOTO_PERFIL && resultCode == RESULT_OK){
-            Uri u = data.getData();
-            profilePic = findViewById(R.id.profilePic);
-            profilePic.setImageURI(u);
-        }
-    }
-    */
-
-
-/*
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        if(requestCode == REQUEST_CODE_GALLERY){
-            if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, REQUEST_CODE_GALLERY);
-            }
-            else {
-                Toast.makeText(getApplicationContext(), "You don't have access to Galery", Toast.LENGTH_SHORT).show();
-            }
-            return;
-        }
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if(requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && data != null){
-            Uri uri = data.getData();
-
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(uri);
-
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                profilePic.setImageBitmap(bitmap);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }else if(requestCode==REQUEST_CODE_CAMERA && resultCode == RESULT_OK && data != null){
-
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            profilePic.setImageBitmap(bitmap);
-
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-    */
 }
 
